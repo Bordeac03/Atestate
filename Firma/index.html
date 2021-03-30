@@ -1,0 +1,484 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+    *, ::before, ::after {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      display: flex;
+      background-color: #e7e6dd;
+    }
+
+    .loading {
+      display: block;
+      margin: auto;
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      top: 50%;
+      left: 47%;
+      z-index: -1;
+    }
+    .loading span {
+      display: block;
+      position: absolute;
+      width: 50%;
+      height: 50%;
+    }
+    .loading span:nth-child(1) {
+      top: 0;
+      left: 0;
+      background-color: rgba(66, 133, 244, 0.75);
+      -webkit-animation: move1 5s linear infinite;
+              animation: move1 5s linear infinite;
+    }
+    .loading span:nth-child(2) {
+      top: 0;
+      right: 0;
+      background-color: rgba(219, 68, 55, 0.75);
+      -webkit-animation: move2 5s linear infinite;
+              animation: move2 5s linear infinite;
+    }
+    .loading span:nth-child(3) {
+      bottom: 0;
+      left: 0;
+      background-color: rgba(244, 180, 0, 0.75);
+      -webkit-animation: move3 5s linear infinite;
+              animation: move3 5s linear infinite;
+    }
+    .loading span:nth-child(4) {
+      bottom: 0;
+      right: 0;
+      background-color: rgba(15, 157, 88, 0.75);
+      -webkit-animation: move4 5s linear infinite;
+              animation: move4 5s linear infinite;
+    }
+
+    @-webkit-keyframes move1 {
+      0% {
+        transform: translate(0);
+        z-index: 10;
+      }
+      25% {
+        transform: translate(100%, 0);
+      }
+      50% {
+        transform: translate(100%, 100%);
+      }
+      75% {
+        transform: translate(0, 100%);
+        z-index: 0;
+      }
+      100% {
+        transform: translate(0);
+      }
+    }
+
+    @keyframes move1 {
+      0% {
+        transform: translate(0);
+        z-index: 10;
+      }
+      25% {
+        transform: translate(100%, 0);
+      }
+      50% {
+        transform: translate(100%, 100%);
+      }
+      75% {
+        transform: translate(0, 100%);
+        z-index: 0;
+      }
+      100% {
+        transform: translate(0);
+      }
+    }
+    @-webkit-keyframes move2 {
+      0% {
+        transform: translate(0);
+      }
+      25% {
+        transform: translate(0, 100%);
+      }
+      50% {
+        transform: translate(-100%, 100%);
+        z-index: 0;
+      }
+      75% {
+        transform: translate(-100%, 0);
+        z-index: 10;
+      }
+      100% {
+        transform: translate(0);
+      }
+    }
+    @keyframes move2 {
+      0% {
+        transform: translate(0);
+      }
+      25% {
+        transform: translate(0, 100%);
+      }
+      50% {
+        transform: translate(-100%, 100%);
+        z-index: 0;
+      }
+      75% {
+        transform: translate(-100%, 0);
+        z-index: 10;
+      }
+      100% {
+        transform: translate(0);
+      }
+    }
+    @-webkit-keyframes move3 {
+      0% {
+        transform: translate(0);
+      }
+      25% {
+        transform: translate(0, -100%);
+        z-index: 10;
+      }
+      50% {
+        transform: translate(100%, -100%);
+      }
+      75% {
+        transform: translate(100%, 0);
+      }
+      100% {
+        transform: translate(0);
+        z-index: 0;
+      }
+    }
+    @keyframes move3 {
+      0% {
+        transform: translate(0);
+      }
+      25% {
+        transform: translate(0, -100%);
+        z-index: 10;
+      }
+      50% {
+        transform: translate(100%, -100%);
+      }
+      75% {
+        transform: translate(100%, 0);
+      }
+      100% {
+        transform: translate(0);
+        z-index: 0;
+      }
+    }
+    @-webkit-keyframes move4 {
+      0% {
+        transform: translate(0);
+      }
+      25% {
+        transform: translate(-100%, 0);
+        z-index: 0;
+      }
+      50% {
+        transform: translate(-100%, -100%);
+        z-index: 10;
+      }
+      75% {
+        transform: translate(0, -100%);
+      }
+      100% {
+        transform: translate(0);
+      }
+    }
+    @keyframes move4 {
+      0% {
+        transform: translate(0);
+      }
+      25% {
+        transform: translate(-100%, 0);
+        z-index: 0;
+      }
+      50% {
+        transform: translate(-100%, -100%);
+        z-index: 10;
+      }
+      75% {
+        transform: translate(0, -100%);
+      }
+      100% {
+        transform: translate(0);
+      }
+    }
+    .box {
+      margin: auto;
+      margin-top: 200px;
+      width: 50%;
+      height: 400px;
+      background-color: white;
+      opacity: 0.5;
+      padding: 10px;
+    }
+    .title {
+      text-align: center;
+      font-family: "Lucida Console", "Monaco", Monospace;
+      font-size: 200%;
+    }
+    .input, .label {
+      width : 50%;
+      padding: 10px;
+      margin: 5px;
+      font-size: 130%;
+    }
+    .label {
+      font-family: "Lucida Console", "Monaco", Monospace;
+      width: 40%;
+      display:inline-block;
+    }
+    .modal {
+      display: none; 
+      position: fixed;
+      z-index: 1; 
+      left: 0;
+      top: 0;
+      width: 100%; 
+      height: 100%;
+      overflow: auto; 
+      background-color: rgb(0,0,0); 
+      background-color: rgba(0,0,0,0.4); 
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto; 
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+      animation-name: animatetop;
+      animation-duration: 0.6s
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    @-webkit-keyframes animatetop {
+      from {top:-300px; opacity:0} 
+      to {top:0; opacity:1}
+    }
+
+    @keyframes animatetop {
+      from {top:-300px; opacity:0}
+      to {top:0; opacity:1}
+    }
+    .all {
+      background-color: #ff8040;
+      color: black;
+      font-size: 20px;
+      padding: 16px;
+      border-radius: 8px;
+      border: none;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      position: absolute;
+      right: 25%;
+      bottom: 30%;
+      margin-right: 10px;
+      margin-bottom: 20px;
+      outline: none;
+    }
+    .all:active {
+      background-color: #ff661c;
+      transform: translateY(5px) translateX(5px);
+    }
+    table{
+      font-family: Arial, Helvetica, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+    td,th {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+    tr:nth-child(even){background-color: #f2f2f2;}
+    tr:hover {background-color: #ddd;}
+    th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: left;
+      background-color: #ff8040;
+      color: white;
+    }
+    </style>
+  </head>
+  <body>
+    <span class="loading">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </span>
+    <div class="box" id="content">
+      <h3 class="title">ATESTAT SRL</h3>
+      <label class="label">Nume:</label>
+      <input id="nume" class="input" type="text" onchange="check()">
+      <label class="label">Prenume:</label>
+      <input id="prenume"class="input" type="text" onchange="check()">
+      <button class="all" onclick="ALL()">ALL</button>
+    </div>
+    <div id="mod" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <table id="tabel">
+          <tr>
+            <th>Nume</th>
+            <th>Prenume</th>
+            <th>CNP</th>
+            <th>Data Nasterii</th>
+            <th>Vechime</th>
+            <th>Salariu</th>
+            <th>Functie</th>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <script>
+      function ALL() {
+        var check = new XMLHttpRequest();
+          check.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+              console.log(this.responseText);
+              if(this.responseText != "NULL") {
+                var modal = document.getElementById("mod");
+                var span = document.getElementsByClassName("close")[0];
+                var tabel = document.getElementById("tabel");
+                var all = JSON.parse(this.responseText);
+
+                for(var i = 0; i < all.length; i++){
+                  var tr = document.createElement("tr");
+                  var td = document.createElement("td");
+                  td.innerHTML= all[i].nume;
+                  tr.appendChild(td);
+                  td = document.createElement("td");
+                  td.innerHTML= all[i].prenume;
+                  tr.appendChild(td);
+                  td = document.createElement("td");
+                  td.innerHTML= all[i].cnp;
+                  tr.appendChild(td);
+                  td = document.createElement("td");
+                  td.innerHTML= all[i].data_n;
+                  tr.appendChild(td);
+                  td = document.createElement("td");
+                  td.innerHTML= all[i].data_a;
+                  tr.appendChild(td);
+                  td = document.createElement("td");
+                  td.innerHTML= all[i].salariu;
+                  tr.appendChild(td);
+                  td = document.createElement("td");
+                  td.innerHTML= all[i].functie;
+                  tr.appendChild(td);
+                  tabel.appendChild(tr);
+                }
+                modal.style.display = "block";
+                span.onclick = function() {
+                  modal.style.display = "none";
+                    while(1 < tabel.rows.length)
+                      tabel.deleteRow(1);
+
+                }
+                window.onclick = function(event) {
+                  if (event.target == modal) {
+                    modal.style.display = "none";
+                    
+                    while(1 < tabel.rows.length)
+                      tabel.deleteRow(1);
+                  }
+                }   
+              }
+            }  
+          }
+          check.open("POST", "/php/check.php", true);
+          check.setRequestHeader("Content-type", "application/application/json");
+          check.send(JSON.stringify({nume:'ALL', prenume:'ALL'}));  
+      }
+      function check() {
+        var nume = document.getElementById("nume").value.trim();
+        var prenume = document.getElementById("prenume").value.trim();
+        
+        if(nume != "" && prenume != ""){
+          var check = new XMLHttpRequest();
+          check.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+              console.log(this.responseText);
+              if(this.responseText != "NULL") {
+                var modal = document.getElementById("mod");
+                var span = document.getElementsByClassName("close")[0];
+                var tabel = document.getElementById("tabel");
+                var all = JSON.parse(this.responseText);
+
+                for(var i = 0; i < all.length; i++){
+                  var tr = document.createElement("tr");
+                  var td = document.createElement("td");
+                  td.innerHTML= all[i].nume;
+                  tr.appendChild(td);
+                  td = document.createElement("td");
+                  td.innerHTML= all[i].prenume;
+                  tr.appendChild(td);
+                  td = document.createElement("td");
+                  td.innerHTML= all[i].cnp;
+                  tr.appendChild(td);
+                  td = document.createElement("td");
+                  td.innerHTML= all[i].data_n;
+                  tr.appendChild(td);
+                  td = document.createElement("td");
+                  td.innerHTML= all[i].data_a;
+                  tr.appendChild(td);
+                  td = document.createElement("td");
+                  td.innerHTML= all[i].salariu;
+                  tr.appendChild(td);
+                  td = document.createElement("td");
+                  td.innerHTML= all[i].functie;
+                  tr.appendChild(td);
+                  tabel.appendChild(tr);
+                }
+                modal.style.display = "block";
+                span.onclick = function() {
+                  modal.style.display = "none";
+                    while(1 < tabel.rows.length)
+                      tabel.deleteRow(1);
+
+                }
+                window.onclick = function(event) {
+                  if (event.target == modal) {
+                    modal.style.display = "none";
+                    
+                    while(1 < tabel.rows.length)
+                      tabel.deleteRow(1);
+                  }
+                }   
+              }
+            }  
+          }
+          check.open("POST", "/php/check.php", true);
+          check.setRequestHeader("Content-type", "application/application/json");
+          check.send(JSON.stringify({nume:nume, prenume:prenume}));  
+        }
+      }
+    </script>
+  </body>
+</html>
