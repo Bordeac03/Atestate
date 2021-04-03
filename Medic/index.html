@@ -2,192 +2,308 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-      body{
-        overflow: hidden;
-        margin: 0 ;
-      }
-      #welcomeBox {
-        margin: 40px auto;
-        max-width: 80%;
-        overflow: hidden;
-        background-color: #c0c0c0;
-        border-radius: 10px;
-      }
-      hr{
-        margin: 0px 20px 0px 20px;
-        border: 2px solid white;
-        border-radius: 5px;
-      }
-      #title{
-        font-family: 'Brush Script MT', cursive;
-        font-size: 300%;
-        text-align: center;
-        text-decoration: none;
-        text-indent: 50px;
-        letter-spacing: 2px;
-        line-height: 0.8;
-        word-spacing: 3px;
-      }
-      #welcomeText{
-        margin: 30px 30px 5px 30px;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        font-size: 200%;
-      }
-      .button {
-        background-color: #008CBA;
-        border: none;
-        color: white;
-        padding: 12px 28px;
-        text-align: center;
-        text-decoration: none;
-        font-size: 20px;
-        margin: 0px 20px 20px 0px;
-        cursor: pointer;
-        border-radius: 12px;
-        float: right;
-      }
-      .button:hover {
-        background-color: #006282;
-        color: white;
-      }
-      .button:active {
-        background-color:  #008CBA;
-        transform: translateY(4px);
-      }
-      .button:focus {
-        outline:0;
-      }
-      .modal {
-        display: none; 
-        position: fixed; 
-        z-index: 1;
-        left: 0;
-        top: 0;
-        width: 100%; 
-        height: 100%; 
-        overflow: auto; 
-        background-color: rgb(0,0,0); 
-        background-color: rgba(0,0,0,0.4); 
-      }
-      .modal-content {
-        background-color: #fefefe;
-        margin: 15% auto;
-        padding: 20px;
-        border: 2px solid #888;
-        border-radius: 10px;
-        width: 50%; 
-      }
-      .close {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
+      :root {
+        --bg-color: radial-gradient(circle at center, #fff, #ccc);
+        --dot-color1:deepskyblue;
+        --dot-color2:#000;
       }
 
-      .close:hover,
-      .close:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
+      body {
+        background: var(--bg-color);
+        background-size: cover;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        min-width: 1300px;
       }
-      h2{
-        font-family: Tahoma, Arial, sans-serif;
-        color: #333;
-        font-size: 180%;
+
+      .dna {
+        height: 70px;
+        perspective: 400px;
+        transform-style: preserve-3d;
       }
-      .modal-content input[type="text"],input[type="date"]{
-        height: 50px;
-        font-size: 200%;
-        border-radius: 12px;
-        border: 2px solid black;
-        font-family: Tahoma, Arial, sans-serif;
-        padding: 10px;
+
+      .ele {
+        width: 3px;
+        height: 90px;
+        float: left;
+        margin: 0 8px;
+        border-left: 1px #B0B0B0 dashed;
+        position: relative;
+        transform: rotateX(-360deg);
+        animation: run 2s linear infinite;
       }
-      .modal-content input[type="submit"]{
-        height: 50px;
-        font-size: 200%;
-        border-radius: 12px;
-        border: 2px solid black;
-        font-family: Tahoma, Arial, sans-serif;
-        padding: 10px;
+      .ele:before, .ele:after {
+        content: "";
+        width: 15px;
+        height: 15px;
+        background: var(--dot-color1);
+        border-radius: 50%;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
       }
-      .modal-content input:focus {
-        border: 3px solid black;
-        outline:0;
+      .ele:before {
+        top: -2px;
+        background: var(--dot-color2);
       }
-      .wrapper {
-        width: 90%;
-        margin: auto;
-        margin-bottom: 20px; 
-        display: grid;
-        grid-template-columns: repeat( auto-fit, minmax(400px, 1fr) );
-        gap: 20px;
+      .ele:after {
+        bottom: -2px;
       }
-      @media(max-width:700px){
-        .modal-content form  {
-          grid-template-columns: repeat( auto-fit, minmax(300px, 1fr) );
+      .ele:nth-of-type(1) {
+        animation-delay: -0.15s;
+      }
+      .ele:nth-of-type(2) {
+        animation-delay: -0.3s;
+      }
+      .ele:nth-of-type(3) {
+        animation-delay: -0.45s;
+      }
+      .ele:nth-of-type(4) {
+        animation-delay: -0.6s;
+      }
+      .ele:nth-of-type(5) {
+        animation-delay: -0.75s;
+      }
+      .ele:nth-of-type(6) {
+        animation-delay: -0.9s;
+      }
+      .ele:nth-of-type(7) {
+        animation-delay: -1.05s;
+      }
+      .ele:nth-of-type(8) {
+        animation-delay: -1.2s;
+      }
+      .ele:nth-of-type(9) {
+        animation-delay: -1.35s;
+      }
+      .ele:nth-of-type(10) {
+        animation-delay: -1.5s;
+      }
+      .ele:nth-of-type(11) {
+        animation-delay: -1.65s;
+      }
+      .ele:nth-of-type(12) {
+        animation-delay: -1.8s;
+      }
+      .ele:nth-of-type(13) {
+        animation-delay: -1.95s;
+      }
+      .ele:nth-of-type(14) {
+        animation-delay: -2.1s;
+      }
+      .ele:nth-of-type(15) {
+        animation-delay: -2.25s;
+      }
+      .ele:nth-of-type(16) {
+        animation-delay: -2.4s;
+      }
+      .ele:nth-of-type(17) {
+        animation-delay: -2.55s;
+      }
+      .ele:nth-of-type(18) {
+        animation-delay: -2.7s;
+      }
+      .ele:nth-of-type(19) {
+        animation-delay: -2.85s;
+      }
+      .ele:nth-of-type(20) {
+        animation-delay: -3s;
+      }
+      .ele:nth-of-type(21) {
+        animation-delay: -3.15s;
+      }
+      .ele:nth-of-type(22) {
+        animation-delay: -3.3s;
+      }
+      .ele:nth-of-type(23) {
+        animation-delay: -3.45s;
+      }
+      .ele:nth-of-type(24) {
+        animation-delay: -3.6s;
+      }
+      .ele:nth-of-type(25) {
+        animation-delay: -3.75s;
+      }
+      .ele:nth-of-type(26) {
+        animation-delay: -3.9s;
+      }
+      .ele:nth-of-type(27) {
+        animation-delay: -4.05s;
+      }
+      .ele:nth-of-type(28) {
+        animation-delay: -4.2s;
+      }
+      .ele:nth-of-type(29) {
+        animation-delay: -4.35s;
+      }
+      .ele:nth-of-type(30) {
+        animation-delay: -4.5s;
+      }
+      .ele:nth-of-type(31) {
+        animation-delay: -4.65s;
+      }
+      .ele:nth-of-type(32) {
+        animation-delay: -4.8s;
+      }
+      .ele:nth-of-type(33) {
+        animation-delay: -4.95s;
+      }
+      .ele:nth-of-type(34) {
+        animation-delay: -5.10s;
+      }
+      .ele:nth-of-type(35) {
+        animation-delay: -5.25s;
+      }
+      .ele:nth-of-type(36) {
+        animation-delay: -5.4s;
+      }
+      .ele:nth-of-type(37) {
+        animation-delay: -5.55s;
+      }
+      .ele:nth-of-type(38) {
+        animation-delay: -5.7s;
+      }
+      .ele:nth-of-type(39) {
+        animation-delay: -5.85s;
+      }
+      .ele:nth-of-type(40) {
+        animation-delay: -6s;
+      }
+      .ele:nth-of-type(41) {
+        animation-delay: -6.15s;
+      }
+      .ele:nth-of-type(42) {
+        animation-delay: -6.30s;
+      }
+      .ele:nth-of-type(43) {
+        animation-delay: -6.5s;
+      }
+      .ele:nth-of-type(44) {
+        animation-delay: -6.65s;
+      }
+      .ele:nth-of-type(45) {
+        animation-delay: -6.80s;
+      }
+      .ele:nth-of-type(46) {
+        animation-delay: -6.95s;
+      }
+      .ele:nth-of-type(47) {
+        animation-delay: -7.1s;
+      }
+      .ele:nth-of-type(48) {
+        animation-delay: -7.25s;
+      }
+      .ele:nth-of-type(49) {
+        animation-delay: -7.4s;
+      }
+      .ele:nth-of-type(50) {
+        animation-delay: -7.55s;
+      }
+      .ele:nth-of-type(51) {
+        animation-delay: -7.70s;
+      }
+      .ele:nth-of-type(52) {
+        animation-delay: -7.85s;
+      }
+      .ele:nth-of-type(53) {
+        animation-delay: -8.0s;
+      }
+      .ele:nth-of-type(54) {
+        animation-delay: -8.15s;
+      }
+      .ele:nth-of-type(55) {
+        animation-delay: -8.30s;
+      }
+      .ele:nth-of-type(56) {
+        animation-delay: -8.45s;
+      }
+      .ele:nth-of-type(57) {
+        animation-delay: -8.60s;
+      }
+      .ele:nth-of-type(58) {
+        animation-delay: -8.75s;
+      }
+      .ele:nth-of-type(59) {
+        animation-delay: -8.9s;
+      }
+      .ele:nth-of-type(60) {
+        animation-delay: -9.05s;
+      }
+
+      @keyframes run {
+        to {
+          transform: none;
         }
       }
+            
     </style>
     
   <body>
-    <div id="welcomeBox">
-      <h2 id="title">Bine ati venit la clinica HealthMed</h2>
-      <hr>
-      <p id="welcomeText">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sit amet libero vehicula, lacinia quam non, facilisis eros. Fusce elementum congue ligula, ac congue tellus luctus in. Praesent pulvinar commodo augue ut finibus. Pellentesque lacus metus, dapibus eget quam at, ornare venenatis ipsum. Ut et massa aliquet, sodales nibh ut, convallis libero. Vestibulum eget sodales erat. Praesent id diam vitae dui eleifend aliquam. Vivamus bibendum convallis urna, eget mattis augue maximus nec. Ut maximus ex nec orci pulvinar facilisis.Proin tincidunt, arcu efficitur suscipit blandit, mauris nunc sagittis ipsum, in fringilla diam erat non leo. In hac habitasse platea dictumst. Integer et imperdiet tortor. Suspendisse et aliquam sapien. Quisque lacinia aliquam odio, non molestie sapien dictum vitae. Donec a justo mauris. Aliquam facilisis, eros at commodo tristique, dui lorem malesuada mauris, ut elementum mi est sed eros. Aliquam at congue lorem. Proin congue rutrum ipsum vel ultrices. Maecenas accumsan mattis risus pulvinar sagittis. Nullam in mauris pulvinar, ultricies elit eu, blandit est. Quisque ut enim eget quam sodales vulputate sed sed mi. Nulla et ultricies elit.
-      </p>
-      <button id="inscriere" class="button">Inscriere</button>      
-    </div>
-    <div id="popup" class="modal">
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>Date personale</h2>
-        <form>
-          <div class="wrapper">
-            <input type="text" id="nume" name="nume" placeholder="Nume" onchange="change()">
-            <input type="text" id="prenume" name="prenume" placeholder="Prenume" onchange="change()">
-            <input type="text" id="cnp" name="cnp" placeholder="CNP" onchange="change()">
-            <input type="date" id="data_n" name="data_n" placeholder="Data Nasterii" onchange="change()">
-          </div>
-          <input type="submit" value="Submit">
-        </form>
-      </div>
+    <div class="dna">
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
     </div>
     <script>
-    var modal = document.getElementById("popup");
-    var btn = document.getElementById("inscriere");
-    var span = document.getElementsByClassName("close")[0];
-    btn.onclick = function() {
-      modal.style.display = "block";
-    }
-    span.onclick = function() {
-      modal.style.display = "none";
-    }
-    window.onclick = function(event) {
-      if (event.target == modal) {
-        modal.style.display = "none";
-      }
-    }
-    function change(){
-      nume = document.getElementById("nume");
-      prenume = document.getElementById("prenume");
-      cnp = document.getElementById("cnp");
-      data_n = document.getElementById("data_n");
-
-      if(nume.value != "" && prenume.value != "" && cnp.value != "" && data_n.value != ""){
-        console.log("Date Personale primite");
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-          if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
-          }
-        };
-        xhttp.open("POST", "api/pacient.php", true);
-        xhttp.setRequestHeader("Content-type", "'application/json'");
-        xhttp.send(JSON.stringify({Nume:nume.value, Prenume:prenume.value,Cnp:cnp.value,Data_n:data_n.value}));
-      }
-    }
     </script>
   </head>
   </body>
