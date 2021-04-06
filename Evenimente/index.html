@@ -1,0 +1,318 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+    .text-effect {
+      overflow: hidden;
+      position: relative;
+      filter: contrast(110%) brightness(190%);
+      z-index: -1;
+    }
+
+    .neon {
+      position: relative;
+      background: black;
+      color: transparent;
+    }
+
+    .neon::before, .neon::after {
+      content: attr(data-text);
+      color: white;
+      filter: blur(0.02em);
+      position: absolute;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+    }
+
+    .neon::after {
+      mix-blend-mode: difference;
+    }
+
+    .gradient,
+    .spotlight {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    .gradient {
+      background: linear-gradient(45deg, red, blue);
+      mix-blend-mode: multiply;
+    }
+
+    .spotlight {
+      -webkit-animation: light 5s infinite linear;
+              animation: light 5s infinite linear;
+      background: radial-gradient(circle, white, transparent 25%) 0 0/25% 25%, radial-gradient(circle, white, black 25%) 50% 50%/12.5% 12.5%;
+      top: -100%;
+      left: -100%;
+      mix-blend-mode: color-dodge;
+    }
+
+    @-webkit-keyframes light {
+      100% {
+        transform: translate3d(50%, 50%, 0);
+      }
+    }
+
+    @keyframes light {
+      100% {
+        transform: translate3d(50%, 50%, 0);
+      }
+    }
+    
+    .neon {
+      font: 700 220px "Lato", sans-serif;
+      text-transform: uppercase;
+      text-align: center;
+      margin: 0;
+    }
+    
+    .neon:focus {
+      outline: none;
+      border: 1px dotted white;
+    }
+
+    body {
+      background: black;
+      display: flex;
+      min-height: 100vh;
+      justify-content: center;
+      align-content: center;
+      align-items: center;
+    }
+    #content {
+      margin: auto;
+      margin-top: 50px;
+      width: 50%;
+      min-height: 400px;
+      background-color: white;
+      opacity: 0.5;
+      padding: 50px;
+      position: absolute;
+    }
+    .input, .label {
+      width : 50%;
+      padding: 10px;
+      margin: 5px;
+      font-size: 130%;
+    }
+    .label {
+      font-family: "Copperplate", Fantasy;
+      width: 40%;
+      display:inline-block;
+    }
+    button {
+      background-color: #b700ff; /* Green */
+      border: none;
+      color: white;
+      padding: 14px 40px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 20px;
+      border-radius: 12px;
+      outline: none;
+    }
+    button:active {
+      background-color: #272727;
+      transform: translateY(5px);
+    }
+    .modal {
+      display: none; 
+      position: fixed;
+      z-index: 1; 
+      left: 0;
+      top: 0;
+      width: 100%; 
+      height: 100%;
+      overflow: auto; 
+      background-color: rgb(0,0,0); 
+      background-color: rgba(0,0,0,0.4); 
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto; 
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+      animation-name: animatetop;
+      animation-duration: 0.6s
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    @-webkit-keyframes animatetop {
+      from {top:-300px; opacity:0} 
+      to {top:0; opacity:1}
+    }
+
+    @keyframes animatetop {
+      from {top:-300px; opacity:0}
+      to {top:0; opacity:1}
+    }
+    #events {
+      font-family: Arial, Helvetica, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    #events td, #events th {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+
+    #events tr:nth-child(even){background-color: #f2f2f2;}
+
+    #events tr:hover {background-color: #ddd;}
+
+    #events th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: left;
+      background-color: #c040b5;
+      color: white;
+    }
+    </style>
+  </head>
+  <body>
+    <div class="text-effect">
+      <!-- Select the text in the preview and type in your own -->
+      <h1 class="neon" data-text="Party" contenteditable>Party</h1>
+      <div class="gradient"></div>
+      <div class="spotlight"></div>
+    </div>
+    <div id="content">
+      <label class="label">Nume Eveniment:</label>
+      <input id="nume" class="input" type="text" onchange="CHANGE()">
+      <label class="label">Locatie Eveniment:</label>
+      <input id="locatie" class="input" type="text" onchange="CHANGE()">
+      <label class="label">Data:</label>
+      <input id="data" class="input" type="date" onchange="CHANGE()">
+      <label class="label">Detalii Eveniment:</label>
+      <input id="detalii" class="input" type="text" onchange="CHANGE()">
+      <label class="label">Nume organizator:</label>
+      <input id="nume_org" class="input" type="text" onchange="CHANGE()">
+      <label class="label">Prenume organizator:</label>
+      <input id="prenume_org" class="input" type="text" onchange="CHANGE()">
+      <label class="label">CNP:</label>
+      <input id="cnp_org" class="input" type="text" onchange="CHANGE()">
+      <button onclick="CLICK()">
+        View all events!
+      </button>
+    </div>
+    <div id="popUp" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <table id="events">
+          <tr>
+            <th>Nume Eveniment</th>
+            <th>Locatie</th>
+            <th>Data</th>
+            <th>Detalii</th>
+            <th>Nume Organizator</th>
+            <th>Prenume Organizator</th>
+            <th>CNP</th>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <script>
+
+      var span = document.getElementsByClassName("close")[0];
+      span.onclick = function() {
+        var modal = document.getElementById("popUp");
+        modal.style.display = "none";
+      }
+      window.onclick = function(event) {
+        var modal = document.getElementById("popUp");
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      }
+      function CLICK() {
+        var modal = document.getElementById("popUp");
+        modal.style.display = "block";
+        var xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+              var tabel = document.getElementById("events");
+                var all = JSON.parse(this.responseText);
+
+                while(1 < tabel.rows.length)
+                      tabel.deleteRow(1);
+
+                for(var i = 0; i < all.length; i++){
+                var tr = document.createElement("tr");
+                var td = document.createElement("td");
+                td.innerHTML= all[i].nume;
+                tr.appendChild(td);
+                td = document.createElement("td");
+                td.innerHTML= all[i].locatie;
+                tr.appendChild(td);
+                td = document.createElement("td");
+                td.innerHTML= all[i].data;
+                tr.appendChild(td);
+                td = document.createElement("td");
+                td.innerHTML= all[i].detalii;
+                tr.appendChild(td);
+                td = document.createElement("td");
+                td.innerHTML= all[i].nume_org;
+                tr.appendChild(td);
+                td = document.createElement("td");
+                td.innerHTML= all[i].prenume_org;
+                tr.appendChild(td);
+                td = document.createElement("td");
+                td.innerHTML= all[i].cnp_org;
+                tr.appendChild(td);
+                tabel.appendChild(tr);
+              }  
+            }  
+          }
+          xhttp.open("GET", "/php/all.php", true);
+          xhttp.send();
+        
+      }
+      function CHANGE() {
+        var NUME = document.getElementById("nume").value.trim();
+        var LOCATIE = document.getElementById("locatie").value.trim();
+        var DATA = document.getElementById("data").value.trim();
+        var DETALII = document.getElementById("detalii").value.trim();
+        var NUME_ORG = document.getElementById("nume_org").value.trim();
+        var PRENUME_ORG = document.getElementById("prenume_org").value.trim();
+        var CNP = document.getElementById("cnp_org").value.trim();
+
+        if(NUME != "" && LOCATIE != "" && DATA != "" && DETALII != "" && NUME_ORG != "" && PRENUME_ORG != "" && CNP != "" && CNP.match(/^[0-9]+$/) != null && CNP.length == 13) {
+          var xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+              alert("Eveniment adaugat in agenda!");  
+            }  
+          }
+          xhttp.open("POST", "/php/add.php", true);
+          xhttp.setRequestHeader("Content-type", "application/application/json");                 
+          xhttp.send(JSON.stringify({nume:NUME,locatie:LOCATIE, data:DATA,detalii:DETALII,nume_org:NUME_ORG,prenume_org:PRENUME_ORG,cnp:CNP}));
+        }
+      }
+    </script>    
+  </body>
+</html>
