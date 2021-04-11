@@ -1,0 +1,205 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      body {
+        background: url(img/background.png) no-repeat center center fixed; 
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+      }
+      .box1 {
+        min-height: 600px;
+        width: 35%;
+        background-color: white;
+        display: inline-block;
+        margin-left: 10%;
+        opacity: 0.7;
+        margin-top: 100px;
+        border: black 8px;
+        border-style: groove;
+      }
+      .box2 {
+        min-height: 600px;
+        width: 35%;
+        background-color: white;
+        display: inline-block;
+        margin-left: 10%;
+        opacity: 0.7;
+        margin-top: 100px;
+        border: black 8px;
+        border-style: groove;
+      }
+      .input, .label {
+      width : 90%;
+      padding: 10px;
+      margin: 10px;
+      font-size: 130%;
+    }
+    .label {
+      font-family: "Lucida Console", "Monaco", Monospace;
+      width: 40%;
+    }
+    .title {
+      text-align: center;
+      font-family: "Lucida Console", "Monaco", Monospace;
+      font-size: 200%;
+    }
+    .title2 {
+      text-align: center;
+      font-family: "Lucida Console", "Monaco", Monospace;
+      font-size: 250%;
+    }
+    table{
+      font-family: Arial, Helvetica, sans-serif;
+      border-collapse: collapse;
+      width: 90%;
+      margin: auto;
+    }
+    td,th {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+    tr:nth-child(even){background-color: #f2f2f2;}
+    tr:hover {background-color: #ddd;}
+    th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: left;
+      background-color: #ff8040;
+      color: white;
+    }
+    wrapper {
+      background: #ffffff;
+      padding: 5%;
+      text-align: center;
+      width: 80%;
+      display: inline-block;
+    }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="box1">
+        <h3 class="title">Elev</h3>
+        <label class="label">Nume:</label>
+        <input id="nume" class="input" type="text" onchange="search()">
+        <label class="label">Prenume:</label>
+        <input id="prenume"class="input" type="text" onchange="search()">
+        <label class="label">Cnp:</label>
+        <input id="cnp"class="input" type="text" onchange="search()">
+        <h3 class="title">Adeverinta</h3>
+        <label class="label">Data:</label>
+        <input id="data" class="input" type="date" onchange="save()">
+        <label class="label">Fisier:</label>
+        <input id="fisier"class="input" type="file" onchange="save()">
+      </div>
+      <div class="box2">
+        <h3 class="title2">Adeverinte</h3>
+        <table id="tabel">
+          <tr>
+            <th>Nume si prenume elev</th>
+            <th>Data</th>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <script>
+      function all() {
+        var tabel = document.getElementById("tabel");
+        var ALL = new XMLHttpRequest();
+        ALL.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            if(this.responseText != "NULL"){
+              var all = JSON.parse(this.responseText);
+              while(1 < tabel.rows.length)
+                  tabel.deleteRow(1);
+
+              for(var i = 0; i < all.length; i++){
+                  var tr = document.createElement("tr");
+                  var td = document.createElement("td");
+                  var link = document.createElement('a');
+                  link.setAttribute('href', all[i].link);
+                  link.innerHTML= all[i].nume + ' ' + all[i].prenume;
+                  td.appendChild(link);
+                  tr.appendChild(td);
+                  td = document.createElement("td");
+                  td.innerHTML= all[i].data;
+                  tr.appendChild(td);
+                  tabel.appendChild(tr);
+              }
+            }
+          }
+        }
+          ALL.open("GET", "/php/all.php", true);
+          ALL.send();
+      }
+      window.onload = all();
+      function search(){
+        var nume = document.getElementById("nume").value.trim();
+        var prenume = document.getElementById("prenume").value.trim();
+        var cnp = document.getElementById("cnp").value.trim();
+        
+        if(nume != "" && prenume != "" && cnp != "" && cnp.match(/^[0-9]+$/) != null && cnp.length == 13){
+          var search = new XMLHttpRequest();
+          search.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+              var tabel = document.getElementById("tabel");
+                while(1 < tabel.rows.length)
+                        tabel.deleteRow(1);
+              if(this.responseText != "NULL"){
+                var all = JSON.parse(this.responseText);
+                for(var i = 0; i < all.length; i++){
+                  var tr = document.createElement("tr");
+                  var td = document.createElement("td");
+                  var link = document.createElement('a');
+                  link.setAttribute('href', all[i].link);
+                  link.innerHTML= all[i].nume + ' ' + all[i].prenume;
+                  td.appendChild(link);
+                  tr.appendChild(td);
+                  td = document.createElement("td");
+                  td.innerHTML= all[i].data;
+                  tr.appendChild(td);
+                  tabel.appendChild(tr);
+                } 
+              }
+            }
+          }
+          search.open("POST", "/php/search.php", true);
+          search.setRequestHeader("Content-type", "application/application/json");
+          search.send(JSON.stringify({nume:nume, prenume:prenume,cnp:cnp})); 
+        }
+      }
+      function save(){
+        var nume = document.getElementById("nume").value.trim();
+        var prenume = document.getElementById("prenume").value.trim();
+        var cnp = document.getElementById("cnp").value.trim();
+        var data = document.getElementById("data").value.trim();
+        var file = document.getElementById("fisier").files[0];
+        
+        if(nume != "" && prenume != "" && cnp != "" && cnp.match(/^[0-9]+$/) != null && cnp.length == 13 && data != "" && file != null & confirm("Doresti sa introduci o nou document?")){
+          var save = new XMLHttpRequest();
+          save.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+              var sql = new XMLHttpRequest();
+              sql.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                  alert("Adeverinta adaugata");
+                  all();
+                }
+              }
+              sql.open("POST", "/php/savesql.php", true);
+              sql.setRequestHeader("Content-type", "application/application/json");
+              sql.send(JSON.stringify({nume:nume, prenume:prenume,cnp:cnp,link:"/adeverinte/"+file.name,data:data}));  
+            }
+          }
+          var form_data = new FormData();                  
+          form_data.append('file', file);
+          save.open("POST", "/php/save.php", true);
+          save.send(form_data);
+        }
+      }
+    </script>    
+  </body>
+</html>
