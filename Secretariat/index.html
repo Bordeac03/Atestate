@@ -178,7 +178,8 @@
         var data = document.getElementById("data").value.trim();
         var file = document.getElementById("fisier").files[0];
         
-        if(nume != "" && prenume != "" && cnp != "" && cnp.match(/^[0-9]+$/) != null && cnp.length == 13 && data != "" && file != null & confirm("Doresti sa introduci o nou document?")){
+        if(nume != "" && prenume != "" && cnp != "" && cnp.match(/^[0-9]+$/) != null && cnp.length == 13 && data != "" && file != null){
+          if(confirm("Doresti sa introduci o nou document?")){
           var save = new XMLHttpRequest();
           save.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
@@ -198,6 +199,7 @@
           form_data.append('file', file);
           save.open("POST", "/php/save.php", true);
           save.send(form_data);
+        }
         }
       }
     </script>    
