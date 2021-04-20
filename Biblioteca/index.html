@@ -236,6 +236,22 @@
       margin-top: 2px;
       margin-right: 2px;
     }
+    .delete {
+      padding: 16px;
+      font-size: 16px;
+      background-color: gray;
+      color: black;
+      border: none;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      border-radius: 8px;
+      outline: none;
+    }
+    .delete:active {
+      background-color: #272727;
+      transform: translateY(5px);
+    }
     table{
       font-family: "Lucida Handwriting", cursive;
       border-collapse: collapse;
@@ -321,10 +337,30 @@
       background-color: #272727;
       transform: translateY(5px) translateX(5px);
     }
+    .all {
+      background-color: #838383ec;
+      color: white;
+      font-size: 20px;
+      padding: 16px;
+      border-radius: 8px;
+      border: none;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      position: absolute;
+      margin-right: 10px;
+      margin-bottom: 20px;
+      outline: none;
+    }
+    .all:active {
+      background-color: #272727;
+      transform: translateY(-5px) translateX(-5px);
+    }
     </style>
   </head>
   <body>
     <div class="box" id="content">
+      <button class="all" onclick="redirect()">ALL</button>
       <h3 class="title">Biblioteca</h3>
       <label class="label">Nume</label>
       <input id="nume" class="input" type="text" oninput="onChange()">
@@ -340,6 +376,7 @@
           <th>Autor</th>
           <th>Data Primirii</th>
           <th>Data Predare</th>
+          <th>Predare</th>
         </tr>
       </table>
       <div id="popUp" class="modal">
@@ -358,6 +395,9 @@
         </div>
       </div>
     <script>
+      function redirect() {
+        window.location.replace("http://" + window.location.hostname+"/carti.html");
+      }
       function book() {
         var titlul = document.getElementById('titlul');
         var titlul_value = titlul.options[titlul.selectedIndex].text;
@@ -508,6 +548,13 @@
                         if(celula.innerHTML == '0000-00-00')
                           celula.innerHTML='nu exista';
                         rand.appendChild(celula);
+                        celula = document.createElement('td');
+                        del = document.createElement('button');
+                        del.innerHTML = "STERGE";
+                        del.setAttribute("class","delete");
+                        del.setAttribute("id",data[i].ID);
+                        celula.appendChild(del);
+                        rand.appendChild(celula);
                         istoric.appendChild(rand);
                       }
                     }  
@@ -547,8 +594,34 @@
                       rand.appendChild(celula);
                       celula = document.createElement('td');
                       celula.innerHTML = data[i].data_predare;
-                      if(celula.innerHTML == '0000-00-00')
+                      if(celula.innerHTML == '0000-00-00' || data[i].data_predare == null)
                           celula.innerHTML='nu exista';
+                      
+                      rand.appendChild(celula);
+                      celula = document.createElement('td');
+                      del = document.createElement('button');
+                      del.innerHTML = "Predat";
+                      del.setAttribute("class","delete");
+                      del.setAttribute("id",data[i].ID);
+                      del.disabled = true;
+                      console.log(data[i].data_predare);
+                      if(data[i].data_predare == '0000-00-00' || data[i].data_predare == null){
+                          del.disabled = false;
+                          del.innerHTML = "Preda";
+                      }
+                      del.onclick = function() {
+                        var request = new XMLHttpRequest();
+                        request.onreadystatechange = function() {
+                          if (this.readyState == 4 && this.status == 200) {
+                            console.log(this.responseText);
+                            onChange();
+                          }  
+                        }
+                        request.open("POST", "/api/predat.php", true);
+                        request.setRequestHeader("Content-type", "application/application/json");
+                        request.send(JSON.stringify({ID:this.id}));  
+                      }
+                      celula.appendChild(del);
                       rand.appendChild(celula);
                       istoric.appendChild(rand);
                     }

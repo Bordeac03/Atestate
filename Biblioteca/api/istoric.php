@@ -7,7 +7,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
     if(mysqli_num_rows($result) > 0) {
         $row = mysqli_fetch_assoc($result);
-        $sql = "SELECT student.nume,student.prenume,carti.titlul,carti.autor,monitor.data_primire,monitor.data_predare FROM monitor INNER JOIN student ON (student.ID=monitor.ID_student) INNER JOIN carti on (monitor.ID_carte=carti.ID) WHERE monitor.ID_student=". $row['ID'].";";
+        $sql = "SELECT student.nume,student.prenume,monitor.ID,carti.titlul,carti.autor,monitor.data_primire,monitor.data_predare FROM monitor INNER JOIN student ON (student.ID=monitor.ID_student) INNER JOIN carti on (monitor.ID_carte=carti.ID) WHERE monitor.ID_student=". $row['ID'].";";
         $result = mysqli_query($conn, $sql);
         $rows = array();
         if (mysqli_num_rows($result) > 0) {

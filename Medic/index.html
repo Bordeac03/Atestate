@@ -1,6 +1,6 @@
 <html>
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
     <style>
       :root {
         --bg-color: radial-gradient(circle at center, #fff, #ccc);
@@ -15,47 +15,59 @@
         justify-content: center;
         align-items: center;
         height: 100vh;
-        min-width: 1300px;
+        min-height: 1300px;
       }
 
       .dna {
-        height: 70px;
-        perspective: 400px;
+        height: 1200px;
+        perspective: 3000px;
         transform-style: preserve-3d;
+        position: absolute;
+        top: 15%;
+        left: 9%;
+      }
+
+      .dna2 {
+        height: 1200px;
+        perspective: 3000px;
+        transform-style: preserve-3d;
+        position: absolute;
+        top: 15%;
+        right: 9%;
       }
 
       .ele {
-        width: 3px;
-        height: 90px;
-        float: left;
-        margin: 0 8px;
-        border-left: 1px #B0B0B0 dashed;
+        width: 150px;
+        height: 10px;
+        float: top;
+        margin: 15px 8px ;
+        border-top: 1px #B0B0B0 dashed;
         position: relative;
-        transform: rotateX(-360deg);
-        animation: run 2s linear infinite;
+        transform: rotateY(-360deg);
+        animation: run 4s linear infinite;
       }
       .ele:before, .ele:after {
         content: "";
-        width: 15px;
-        height: 15px;
+        width: 30px;
+        height: 30px;
         background: var(--dot-color1);
         border-radius: 50%;
         position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
+        top: 50%;
+        transform: translateY(-50%);
       }
       .ele:before {
-        top: -2px;
+        left: -10px;
         background: var(--dot-color2);
       }
       .ele:after {
-        bottom: -2px;
+        right: -10px;
       }
       .ele:nth-of-type(1) {
-        animation-delay: -0.10s;
+        animation-delay: -0.1s;
       }
       .ele:nth-of-type(2) {
-        animation-delay: -0.20s;
+        animation-delay: -0.2s;
       }
       .ele:nth-of-type(3) {
         animation-delay: -0.3s;
@@ -79,7 +91,7 @@
         animation-delay: -0.9s;
       }
       .ele:nth-of-type(10) {
-        animation-delay: -1s;
+        animation-delay: -1.0s;
       }
       .ele:nth-of-type(11) {
         animation-delay: -1.1s;
@@ -109,7 +121,7 @@
         animation-delay: -1.9s;
       }
       .ele:nth-of-type(20) {
-        animation-delay: -2s;
+        animation-delay: -2.0s;
       }
       .ele:nth-of-type(21) {
         animation-delay: -2.1s;
@@ -139,7 +151,7 @@
         animation-delay: -2.9s;
       }
       .ele:nth-of-type(30) {
-        animation-delay: -3s;
+        animation-delay: -3.0s;
       }
       .ele:nth-of-type(31) {
         animation-delay: -3.1s;
@@ -169,67 +181,247 @@
         animation-delay: -3.9s;
       }
       .ele:nth-of-type(40) {
-        animation-delay: -4s;
+        animation-delay: -0s;
       }
       .ele:nth-of-type(41) {
-        animation-delay: -4.1s;
+        animation-delay: -0.1s;
       }
       .ele:nth-of-type(42) {
-        animation-delay: -4.2s;
+        animation-delay: -0.2s;
       }
       .ele:nth-of-type(43) {
-        animation-delay: -4.3s;
+        animation-delay: -0.3s;
       }
       .ele:nth-of-type(44) {
-        animation-delay: -4.4s;
+        animation-delay: -0.4s;
       }
       .ele:nth-of-type(45) {
-        animation-delay: -4.5s;
+        animation-delay: -0.5s;
       }
       .ele:nth-of-type(46) {
-        animation-delay: -4.6s;
+        animation-delay: -0.6s;
       }
       .ele:nth-of-type(47) {
-        animation-delay: -4.7s;
+        animation-delay: -0.7s;
       }
       .ele:nth-of-type(48) {
-        animation-delay: -4.8s;
+        animation-delay: -0.8s;
       }
       .ele:nth-of-type(49) {
-        animation-delay: -4.9s;
+        animation-delay: -0.9s;
       }
       .ele:nth-of-type(50) {
-        animation-delay: -5s;
+        animation-delay: -1.0s;
       }
       .ele:nth-of-type(51) {
-        animation-delay: -5.1s;
+        animation-delay: -1.1s;
       }
       .ele:nth-of-type(52) {
-        animation-delay: -5.2s;
+        animation-delay: -1.2s;
       }
       .ele:nth-of-type(53) {
-        animation-delay: -5.3s;
+        animation-delay: -1.3s;
       }
       .ele:nth-of-type(54) {
-        animation-delay: -5.4s;
+        animation-delay: -1.4s;
       }
       .ele:nth-of-type(55) {
-        animation-delay: -5.5s;
+        animation-delay: -1.5s;
       }
       .ele:nth-of-type(56) {
-        animation-delay: -5.6s;
+        animation-delay: -1.6s;
       }
       .ele:nth-of-type(57) {
-        animation-delay: -5.7s;
+        animation-delay: -1.7s;
       }
       .ele:nth-of-type(58) {
-        animation-delay: -5.8s;
+        animation-delay: -1.8s;
       }
       .ele:nth-of-type(59) {
-        animation-delay: -5.9s;
+        animation-delay: -1.9s;
       }
       .ele:nth-of-type(60) {
-        animation-delay: -6s;
+        animation-delay: -2.0s;
+      }
+      .ele:nth-of-type(61) {
+        animation-delay: -2.1s;
+      }
+      .ele:nth-of-type(62) {
+        animation-delay: -2.2s;
+      }
+      .ele:nth-of-type(63) {
+        animation-delay: -2.3s;
+      }
+      .ele:nth-of-type(64) {
+        animation-delay: -2.4s;
+      }
+      .ele:nth-of-type(65) {
+        animation-delay: -2.5s;
+      }
+      .ele:nth-of-type(66) {
+        animation-delay: -2.6s;
+      }
+      .ele:nth-of-type(67) {
+        animation-delay: -2.7s;
+      }
+      .ele:nth-of-type(68) {
+        animation-delay: -2.8s;
+      }
+      .ele:nth-of-type(69) {
+        animation-delay: -2.9s;
+      }
+      .ele:nth-of-type(70) {
+        animation-delay: -3.0s;
+      }
+      .ele:nth-of-type(71) {
+        animation-delay: -3.1s;
+      }
+      .ele:nth-of-type(72) {
+        animation-delay: -3.2s;
+      }
+      .ele:nth-of-type(73) {
+        animation-delay: -3.3s;
+      }
+      .ele:nth-of-type(74) {
+        animation-delay: -3.4s;
+      }
+      .ele:nth-of-type(75) {
+        animation-delay: -3.5s;
+      }
+      .ele:nth-of-type(76) {
+        animation-delay: -3.6s;
+      }
+      .ele:nth-of-type(77) {
+        animation-delay: -3.7s;
+      }
+      .ele:nth-of-type(78) {
+        animation-delay: -3.8s;
+      }
+      .ele:nth-of-type(79) {
+        animation-delay: -3.9s;
+      }
+      .ele:nth-of-type(80) {
+        animation-delay: -0.0s;
+      }
+      .ele:nth-of-type(81) {
+        animation-delay: -0.1s;
+      }
+      .ele:nth-of-type(82) {
+        animation-delay: -0.2s;
+      }
+      .ele:nth-of-type(83) {
+        animation-delay: -0.3s;
+      }
+      .ele:nth-of-type(84) {
+        animation-delay: -0.4s;
+      }
+      .ele:nth-of-type(85) {
+        animation-delay: -0.5s;
+      }
+      .ele:nth-of-type(86) {
+        animation-delay: -0.6s;
+      }
+      .ele:nth-of-type(87) {
+        animation-delay: -0.7s;
+      }
+      .ele:nth-of-type(88) {
+        animation-delay: -0.8s;
+      }
+      .ele:nth-of-type(89) {
+        animation-delay: -0.9s;
+      }
+      .ele:nth-of-type(90) {
+        animation-delay: -1.0s;
+      }
+      .ele:nth-of-type(91) {
+        animation-delay: -1.1s;
+      }
+      .ele:nth-of-type(92) {
+        animation-delay: -1.2s;
+      }
+      .ele:nth-of-type(93) {
+        animation-delay: -1.3s;
+      }
+      .ele:nth-of-type(94) {
+        animation-delay: -1.4s;
+      }
+      .ele:nth-of-type(95) {
+        animation-delay: -1.5s;
+      }
+      .ele:nth-of-type(96) {
+        animation-delay: -1.6s;
+      }
+      .ele:nth-of-type(97) {
+        animation-delay: -1.7s;
+      }
+      .ele:nth-of-type(98) {
+        animation-delay: -1.8s;
+      }
+      .ele:nth-of-type(99) {
+        animation-delay: -1.9s;
+      }
+      .ele:nth-of-type(100) {
+        animation-delay: -2.0s;
+      }
+      .ele:nth-of-type(101) {
+        animation-delay: -2.1s;
+      }
+      .ele:nth-of-type(102) {
+        animation-delay: -2.2s;
+      }
+      .ele:nth-of-type(103) {
+        animation-delay: -2.3s;
+      }
+      .ele:nth-of-type(104) {
+        animation-delay: -2.4s;
+      }
+      .ele:nth-of-type(105) {
+        animation-delay: -2.5s;
+      }
+      .ele:nth-of-type(106) {
+        animation-delay: -2.6s;
+      }
+      .ele:nth-of-type(107) {
+        animation-delay: -2.7s;
+      }
+      .ele:nth-of-type(108) {
+        animation-delay: -2.8s;
+      }
+      .ele:nth-of-type(109) {
+        animation-delay: -2.9s;
+      }
+      .ele:nth-of-type(110) {
+        animation-delay: -3.0s;
+      }
+      .ele:nth-of-type(111) {
+        animation-delay: -3.1s;
+      }
+      .ele:nth-of-type(112) {
+        animation-delay: -3.2s;
+      }
+      .ele:nth-of-type(113) {
+        animation-delay: -3.3s;
+      }
+      .ele:nth-of-type(114) {
+        animation-delay: -3.4s;
+      }
+      .ele:nth-of-type(115) {
+        animation-delay: -3.5s;
+      }
+      .ele:nth-of-type(116) {
+        animation-delay: -3.6s;
+      }
+      .ele:nth-of-type(117) {
+        animation-delay: -3.7s;
+      }
+      .ele:nth-of-type(118) {
+        animation-delay: -3.8s;
+      }
+      .ele:nth-of-type(119) {
+        animation-delay: -3.9s;
+      }
+      .ele:nth-of-type(120) {
+        animation-delay: -4.0s;
       }
 
       @keyframes run {
@@ -237,7 +429,84 @@
           transform: none;
         }
       }
-            
+      .overlay {
+        height: 0;
+        width: 100%;
+        position: fixed; 
+        left: 0;
+        top: 0;
+        background-color: rgb(0,0,0); 
+        background-color: rgba(0,0,0, 0.9);
+        overflow-x: hidden;
+        transition: 0.5s; 
+      }
+
+      .overlay-content {
+        position: relative;
+        top: 25%;
+        width: 100%; 
+        text-align: center; 
+        margin-top: 30px; 
+      }
+
+      .overlay a {
+        padding: 8px;
+        text-decoration: none;
+        font-size: 36px;
+        color: #818181;
+        display: block;
+        transition: 0.3s; 
+      }
+
+      .overlay a:hover, .overlay a:focus {
+        color: #f1f1f1;
+      }
+
+      .overlay .closebtn {
+        position: absolute;
+        top: 20px;
+        right: 45px;
+        font-size: 60px;
+      }
+
+      @media screen and (max-height: 450px) {
+        .overlay a {font-size: 20px}
+        .overlay .closebtn {
+          font-size: 40px;
+          top: 15px;
+          right: 35px;
+        }
+      }
+      
+    .all {
+      background-color: #838383ec;
+      color: white;
+      font-size: 20px;
+      padding: 30px;
+      border-radius: 8px;
+      border: none;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      outline: none;
+    }
+    .all:active {
+      background-color: #272727;
+      transform: translateY(-5px) translateX(-5px);
+    }
+    .title {
+      text-align: center;
+      font-family: "Lucida Handwriting", "Brush Script MT", cursive;
+      font-size: 300%;
+      display: inline-block;
+    }     
+    .sus {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 10%;
+      
+    }
     </style>
     
   <body>
@@ -302,11 +571,212 @@
       <div class="ele"></div>
       <div class="ele"></div>
       <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
     </div>
-    <div class="content">
-      
+    <div class="dna2">
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+      <div class="ele"></div>
+    </div>
+    <div id="myNav" class="overlay">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <div class="overlay-content">
+        <a href="#">Acasa</a>
+        <a href="#">Programari</a>
+        <a href="#">Despre</a>
+      </div>
+    </div>
+    <div class="sus">
+      <button class="all" onclick="openNav()">MENU</button>
+      <h3 class="title">Клиника здесь для вас</h3>
     </div>
     <script>
+      function openNav() {
+        document.getElementById("myNav").style.height = "100%";
+        document.getElementsByClassName("all")[0].style.display = "none";
+      }
+
+      function closeNav() {
+        document.getElementById("myNav").style.height = "0%";
+        document.getElementsByClassName("all")[0].style.display = "inline-block";
+      }
+
     </script>
   </head>
   </body>
