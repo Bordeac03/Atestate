@@ -252,33 +252,118 @@
       background-color: #272727;
       transform: translateY(-5px) translateX(-5px);
     }
+    .delete {
+      padding: 16px;
+      font-size: 16px;
+      background-color: gray;
+      color: black;
+      border: none;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      border-radius: 8px;
+      outline: none;
+    }
+    .delete:active {
+      background-color: #272727;
+      transform: translateY(5px);
+    }
     </style>
   </head>
-  <body>
+  <body onload="all()">
     <div class="box" id="content">
       <button class="all" onclick="redirect()">BACK</button>
       <h3 class="title">Carti</h3>
       <label class="label">Titlu</label>
-      <input id="titlu" class="input" type="text" oninput="onChange()">
+      <input id="titlu" class="input" type="text" onchange="onChange()">
       <label class="label">Autor</label>
-      <input id="autor"class="input" type="text" oninput="onChange()">
+      <input id="autor"class="input" type="text" onchange="onChange()">
       <label class="label">Categorie</label>
-      <input id="categorie" class="input" type="text" oninput="onChange()">
+      <input id="categorie" class="input" type="text" onchange="onChange()">
       <label class="label">Anul Publicarii</label>
-      <input id="an" class="input" type="text" oninput="onChange()">
+      <input id="an" class="input" type="text" onchange="onChange()">
       <table id='istoric'>
         <tr>
           <th>Titlu</th>
           <th>Autor</th>
           <th>Categorie</th>
           <th>Anul Publicarii</th>
+          <th>Stergeti?</th>
         </tr>
       </table>
       </div>
     <script>
     function redirect() {
-        window.location.replace("http://" + window.location.hostname);
+      window.location.replace("http://" + window.location.hostname);
+    }
+    function all() {
+      var request = new XMLHttpRequest();
+      request.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          var istoric = document.getElementById('istoric');
+          while(istoric.rows.length > 1)
+            istoric.deleteRow(1);
+          var data = JSON.parse(this.responseText);
+          for(var i = 0; i < data.length; i++){
+            var rand = document.createElement('tr');
+            var celula = document.createElement('td');
+            celula.innerHTML = data[i].titlul;
+            rand.appendChild(celula);
+            celula = document.createElement('td');
+            celula.innerHTML = data[i].autor;
+            rand.appendChild(celula);
+            celula = document.createElement('td');
+            celula.innerHTML = data[i].categorie;
+            rand.appendChild(celula);
+            celula = document.createElement('td');
+            celula.innerHTML = data[i].anul_publicarii;
+            rand.appendChild(celula);
+            celula = document.createElement('td');
+            del = document.createElement('button');
+            del.innerHTML = "Eliminare";
+            del.setAttribute("class","delete");
+            del.setAttribute("id",data[i].ID);
+            del.onclick = function() {
+              var request = new XMLHttpRequest();
+              request.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                  console.log(this.responseText);
+                  all();
+                }  
+              }
+              request.open("POST", "/api/stergere.php", true);
+              request.setRequestHeader("Content-type", "application/application/json");
+              request.send(JSON.stringify({ID:this.id}));  
+            }
+            celula.appendChild(del);
+            rand.appendChild(celula);
+            istoric.appendChild(rand);
+          }
+        }  
       }
+      request.open("GET", "/api/all_books.php", true);
+      request.send();  
+    }
+    function onChange() {
+      var TITLU = document.getElementById("titlu").value;
+      var AUTOR = document.getElementById("autor").value;
+      var CATEGORIE = document.getElementById("categorie").value;
+      var AN = document.getElementById("an").value;
+
+      if(TITLU != "" && AUTOR != "" && CATEGORIE != "" && AN != ""){
+        if(confirm("Doresti sa adaugi o carte noua?")){
+          var request = new XMLHttpRequest();
+          request.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+            all();  
+            }  
+          }
+          request.open("POST", "/api/add_book.php", true);
+          request.setRequestHeader("Content-type", "application/application/json");
+          request.send(JSON.stringify({titlul:TITLU, autor:AUTOR, categorie:CATEGORIE, an:AN}));
+        }
+      }
+    }
     </script>
   </body>
 </html>
