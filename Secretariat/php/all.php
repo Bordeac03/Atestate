@@ -11,7 +11,7 @@ if (!$conn) {
 }
 
 if($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $sql = "SELECT elev.nume,elev.prenume,adeverinta.link,adeverinta.data FROM adeverinta INNER JOIN elev ON adeverinta.ID_student=elev.ID";
+    $sql = "SELECT elev.nume,elev.prenume,adeverinta.link,adeverinta.data,adeverinta.ID FROM adeverinta INNER JOIN elev ON adeverinta.ID_student=elev.ID";
     $result = mysqli_query($conn, $sql);
 
     if(mysqli_num_rows($result) > 0) {

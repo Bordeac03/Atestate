@@ -77,6 +77,22 @@
       width: 80%;
       display: inline-block;
     }
+    .delete {
+      padding: 16px;
+      font-size: 16px;
+      background-color: gray;
+      color: black;
+      border: none;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      border-radius: 8px;
+      outline: none;
+    }
+    .delete:active {
+      background-color: #272727;
+      transform: translateY(5px);
+    }
     </style>
   </head>
   <body>
@@ -101,6 +117,7 @@
           <tr>
             <th>Nume si prenume elev</th>
             <th>Data</th>
+            <th>Stergere?</th>
           </tr>
         </table>
       </div>
@@ -112,20 +129,39 @@
         ALL.onreadystatechange = function() {
           if (this.readyState == 4 && this.status == 200) {
             if(this.responseText != "NULL"){
-              var all = JSON.parse(this.responseText);
+              var DATA = JSON.parse(this.responseText);
               while(1 < tabel.rows.length)
                   tabel.deleteRow(1);
 
-              for(var i = 0; i < all.length; i++){
+              for(var i = 0; i < DATA.length; i++){
                   var tr = document.createElement("tr");
                   var td = document.createElement("td");
                   var link = document.createElement('a');
-                  link.setAttribute('href', all[i].link);
-                  link.innerHTML= all[i].nume + ' ' + all[i].prenume;
+                  link.setAttribute('href', DATA[i].link);
+                  link.innerHTML= DATA[i].nume + ' ' + DATA[i].prenume;
                   td.appendChild(link);
                   tr.appendChild(td);
                   td = document.createElement("td");
-                  td.innerHTML= all[i].data;
+                  td.innerHTML= DATA[i].data;
+                  tr.appendChild(td);
+                  td = document.createElement('td');
+                  del = document.createElement('button');
+                  del.innerHTML = "Eliminare";
+                  del.setAttribute("class","delete");
+                  del.setAttribute("id",DATA[i].ID);
+                  del.onclick = function() {
+                    var request = new XMLHttpRequest();
+                    request.onreadystatechange = function() {
+                      if (this.readyState == 4 && this.status == 200) {
+                        console.log(this.responseText);
+                        all();
+                      }  
+                    }
+                    request.open("POST", "/php/stergere.php", true);
+                    request.setRequestHeader("Content-type", "application/application/json");
+                    request.send(JSON.stringify({ID:this.id}));  
+                  }
+                  td.appendChild(del);
                   tr.appendChild(td);
                   tabel.appendChild(tr);
               }
