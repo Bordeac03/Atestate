@@ -507,8 +507,68 @@
       left: 10%;
       
     }
+
+    .content {
+      background-color: aquamarine;
+      position: absolute;
+      left: 25%;
+      top: 15%;
+      min-height: 200px;
+      width: 50%;
+    }
+    #programari {
+      background-color: bisque;
+    }
+    .input, .label {
+      width : 90%;
+      padding: 10px;
+      margin: 5px;
+      font-size: 130%;
+      display: inline-block;
+    }
+    .label {
+      font-family: "Lucida Handwriting", "Brush Script MT", cursive;
+    }
+    #modal {
+      display: none; 
+      position: fixed; 
+      z-index: 1; 
+      left: 0;
+      top: 0;
+      width: 100%; 
+      height: 100%; 
+      overflow: auto; 
+      background-color: rgb(0,0,0); 
+      background-color: rgba(0,0,0,0.4); 
+    }
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto; 
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%; 
+      animation-name: animatetop;
+      animation-duration: 0.4s 
+    }
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    @keyframes animatetop {
+      from {top: -300px; opacity: 0}
+      to {top: 0; opacity: 1}
+    }
     </style>
-    
+  </head>
   <body>
     <div class="dna">
       <div class="ele"></div>
@@ -757,27 +817,198 @@
     <div id="myNav" class="overlay">
       <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
       <div class="overlay-content">
-        <a href="#">Acasa</a>
-        <a href="#">Programari</a>
-        <a href="#">Despre</a>
+        <a href="#acasa">Acasa</a>
+        <a href="#programari">Programari</a>
+        <a href="#despre">Despre</a>
       </div>
     </div>
     <div class="sus">
       <button class="all" onclick="openNav()">MENU</button>
       <h3 class="title">Клиника здесь для вас</h3>
     </div>
+    <div class="content">
+      <div id="acasa">
+        <h3>Acasa</h3>
+      </div>
+      <div id="programari">
+        <h3>Programari</h3>
+        <label class="label">Nume</label>
+        <input id="nume" class="input" type="text" onchange="onChange()">
+        <label class="label">Prenume</label>
+        <input id="prenume" class="input" type="text" onchange="onChange()">
+        <label class="label">CNP</label>
+        <input id="cnp" class="input" type="text" oninput="onChange()">
+      </div>
+      <div id="despre">
+        <h3>Despre</h3>
+      </div>
+    </div>
+    <div id="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <label class="label">Specializare</label>
+        <select id="specializare" name="specializare" class="input" onchange="StageOne()"></select>
+        <label class="label">Doctor</label>
+        <select id="doctor" name="doctor" class="input" onchange="StageTwo()"></select>
+        <label class="label">Consultatie</label>
+        <select id="consultatie" name="consultatie" class="input" onchange="StageTwo()"></select>
+        <label class="label">Data programarii</label>
+        <input id="date" class="input" type="datetime-local" onchange="StageTwo()">
+      </div>
+    </div>
     <script>
       function openNav() {
         document.getElementById("myNav").style.height = "100%";
         document.getElementsByClassName("all")[0].style.display = "none";
+        document.getElementsByClassName("content")[0].style.zIndex = "-1";
       }
 
       function closeNav() {
         document.getElementById("myNav").style.height = "0%";
-        document.getElementsByClassName("all")[0].style.display = "inline-block";
+        setTimeout(() => {  
+          document.getElementsByClassName("all")[0].style.display = "inline-block";
+          document.getElementsByClassName("content")[0].style.zIndex = "0"; }, 300);
+      }
+      function onChange() {
+        var NUME = document.getElementById("nume").value.trim();
+        var PRENUME = document.getElementById("prenume").value.trim();
+        var CNP = document.getElementById("cnp").value.trim();
+        var modal = document.getElementById("modal");  
+        var span = document.getElementsByClassName("close")[0];
+        var specializare = document.getElementById("specializare");
+        var doctor = document.getElementById("doctor");
+        var consultatie = document.getElementById("consultatie");
+        doctor.disabled = true;
+        consultatie.disabled = true;
+        while(doctor.length)
+              doctor.remove(0);
+        while(consultatie.length)
+              consultatie.remove(0);
+        span.onclick = function() {
+          modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        }
+        if(NUME != "" && PRENUME != "" && CNP != "" && CNP.match(/^[0-9]+$/) != null && CNP.length == 13) {
+          modal.style.display = "block";
+          var request = new XMLHttpRequest();
+          request.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+              if(this.responseText == "NULL"){
+                if(confirm("Doresti sa devii pacient?")){
+                  request = new XMLHttpRequest();
+                  request.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                      console.log(this.responseText);
+                    }  
+                  }
+                  request.open("POST", "/api/api.php", true);
+                  request.setRequestHeader("Content-type", "application/application/json");
+                  request.send(JSON.stringify({api:"adaugaPacient",nume:NUME,prenume:PRENUME,cnp:CNP}));
+                } else return;
+              }
+            }  
+          }
+          request.open("POST", "/api/api.php", false);
+          request.setRequestHeader("Content-type", "application/application/json");
+          request.send(JSON.stringify({api:"pacient",nume:NUME,prenume:PRENUME,cnp:CNP}));
+          
+          
+          request = new XMLHttpRequest();
+          request.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+              var data = JSON.parse(this.responseText);
+              while(specializare.length)
+              specializare.remove(0);
+              var option = document.createElement('option');
+              for(var i = 0; i < data.length; i++) {
+                option = document.createElement('option');
+                option.innerHTML = data[i].specializare;
+                option.setAttribute('id',i);
+                specializare.appendChild(option);
+              }
+            }  
+          }
+          request.open("POST", "/api/api.php", true);
+          request.setRequestHeader("Content-type", "application/application/json");
+          request.send(JSON.stringify({api:"specializari"}));
+        }
+      }
+      function StageOne() {
+        var specializare = document.getElementById("specializare");
+        var specializare_value = specializare.options[specializare.selectedIndex].text;
+        var doctor = document.getElementById("doctor");
+        var consultatie = document.getElementById("consultatie");
+        doctor.disabled = false;
+        consultatie.disabled = false;
+        var request = new XMLHttpRequest();
+        request.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            var data = JSON.parse(this.responseText);
+            while(doctor.length)
+            doctor.remove(0);
+            var option = document.createElement('option');
+            for(var i = 0; i < data.length; i++) {
+              option = document.createElement('option');
+              option.innerHTML = data[i].nume + " " + data[i].prenume;
+              option.setAttribute('id',i);
+              doctor.appendChild(option);
+            }
+          }  
+        }
+        request.open("POST", "/api/api.php", true);
+        request.setRequestHeader("Content-type", "application/application/json");
+        request.send(JSON.stringify({api:"doctori",specializare:specializare_value}));
+        request = new XMLHttpRequest();
+        request.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            var data = JSON.parse(this.responseText);
+            while(consultatie.length)
+            consultatie.remove(0);
+            var option = document.createElement('option');
+            for(var i = 0; i < data.length; i++) {
+              option = document.createElement('option');
+              option.innerHTML = data[i].tip;
+              option.setAttribute('id',i);
+              consultatie.appendChild(option);
+            }
+          }  
+        }
+        request.open("POST", "/api/api.php", true);
+        request.setRequestHeader("Content-type", "application/application/json");
+        request.send(JSON.stringify({api:"consultatii",specializare:specializare_value}));
+      }
+      function StageTwo() {
+        var specializare = document.getElementById("specializare");
+        var specializare_value = specializare.options[specializare.selectedIndex].text;
+        var doctor = document.getElementById("doctor");
+        var doctor_value = doctor.options[doctor.selectedIndex].text;
+        var consultatie = document.getElementById("consultatie");
+        var consultatie_value = consultatie.options[consultatie.selectedIndex].text;
+        var DATE = document.getElementById("date").value.trim().replace('T', ' ');
+        var NUME = document.getElementById("nume").value.trim();
+        var PRENUME = document.getElementById("prenume").value.trim();
+        var CNP = document.getElementById("cnp").value.trim();
+        if(DATE == "") return;
+        if(confirm("Doriti sa faceti o programare?")) {
+          var request = new XMLHttpRequest();
+          request.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+              console.log(this.responseText);
+              
+            }  
+          }
+          request.open("POST", "/api/api.php", true);
+          request.setRequestHeader("Content-type", "application/application/json");
+          request.send(JSON.stringify({api:"adaugaProgramare",specializare:specializare_value,tip:consultatie_value,Dnume:doctor_value.split(" ")[0],Dprenume:doctor_value.substring(doctor_value.split(" ")[0].length+1),data:DATE,nume:NUME,prenume:PRENUME,cnp:CNP}));  
+        }
       }
 
     </script>
-  </head>
   </body>
 </html>

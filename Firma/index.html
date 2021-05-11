@@ -324,6 +324,43 @@
       background-color: #ff8040;
       color: white;
     }
+    .delete {
+      padding: 16px;
+      font-size: 16px;
+      background-color: gray;
+      color: black;
+      border: none;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      border-radius: 8px;
+      outline: none;
+    }
+    .delete:active {
+      background-color: #272727;
+      transform: translateY(5px);
+    }
+    .add {
+      background-color: #ff8040;
+      color: black;
+      font-size: 20px;
+      padding: 16px;
+      border-radius: 8px;
+      border: none;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      position: absolute;
+      left: 25%;
+      bottom: 30%;
+      margin-left: 10px;
+      margin-bottom: 20px;
+      outline: none;
+    }
+    .add:active {
+      background-color: #ff661c;
+      transform: translateY(5px) translateX(-5px);
+    }
     </style>
   </head>
   <body>
@@ -340,6 +377,7 @@
       <label class="label">Prenume:</label>
       <input id="prenume"class="input" type="text" onchange="check()">
       <button class="all" onclick="ALL()">ALL</button>
+      <button class="add" onclick="ADD()">ADD</button>``
     </div>
     <div id="mod" class="modal">
       <div class="modal-content">
@@ -357,18 +395,87 @@
         </table>
       </div>
     </div>
+    <div id="modAdd" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <label class="label">Nume:</label>
+        <input id="nume2" class="input" type="text" onchange="AD()">
+        <label class="label">Prenume:</label>
+        <input id="prenume2" class="input" type="text" onchange="AD()">
+        <label class="label">CNP:</label>
+        <input id="cnp2" class="input" type="text" onchange="AD()">
+        <label class="label">Data Nasterii:</label>
+        <input id="datan2" class="input" type="date" onchange="AD()">
+        <label class="label">Salariu:</label>
+        <input id="salariu2" class="input" type="text" onchange="AD()">
+        <label class="label">Functie:</label>
+        <input id="functie2" class="input" type="text" onchange="AD()">
+      </div>
+    </div>
     <script>
+      function ADD() {
+        var modal = document.getElementById("modAdd");
+        var span = document.getElementsByClassName("close")[1];
+        modal.style.display = "block";
+        span.onclick = function() {
+          modal.style.display = "none";
+        }
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        }  
+      }
+      function AD() {
+        var nume = document.getElementById("nume2").value.trim();
+        var prenume = document.getElementById("prenume2").value.trim();
+        var cnp = document.getElementById("cnp2").value.trim();
+        var datan = document.getElementById("datan2").value.trim();
+        var salariu = document.getElementById("salariu2").value.trim();
+        var functie = document.getElementById("functie2").value.trim(); 
+        
+        if(nume != "" && prenume != "" && cnp != "" && cnp.match(/^[0-9]+$/) != null && cnp.length == 13 && datan != "" && salariu != "" && functie != "") {
+          if(confirm("Adaugati salariat?")){
+            var sql = new XMLHttpRequest();
+              sql.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                  var modal = document.getElementById("modAdd");
+                  modal.style.display = "none";
+                }
+              }
+              sql.open("POST", "/php/save.php", true);
+              sql.setRequestHeader("Content-type", "application/application/json");
+              sql.send(JSON.stringify({nume:nume, prenume:prenume,cnp:cnp,datan:datan,salariu:salariu,functie:functie}));  
+          }
+        }
+      }
       function ALL() {
+        var modal = document.getElementById("mod");
+        var span = document.getElementsByClassName("close")[0];
+        var tabel = document.getElementById("tabel");
+        modal.style.display = "block";
+        span.onclick = function() {
+        modal.style.display = "none";
+          while(1 < tabel.rows.length)
+            tabel.deleteRow(1);
+
+      }
+      window.onclick = function(event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+          
+          while(1 < tabel.rows.length)
+            tabel.deleteRow(1);
+        }
+      }
         var check = new XMLHttpRequest();
           check.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
               console.log(this.responseText);
               if(this.responseText != "NULL") {
-                var modal = document.getElementById("mod");
-                var span = document.getElementsByClassName("close")[0];
-                var tabel = document.getElementById("tabel");
                 var all = JSON.parse(this.responseText);
-
+                while(1 < tabel.rows.length)
+                      tabel.deleteRow(1);
                 for(var i = 0; i < all.length; i++){
                   var tr = document.createElement("tr");
                   var td = document.createElement("td");
@@ -392,26 +499,31 @@
                   td = document.createElement("td");
                   td.innerHTML= all[i].functie;
                   tr.appendChild(td);
+                  td = document.createElement('td');
+                  del = document.createElement('button');
+                  del.innerHTML = "Eliminare";
+                  del.setAttribute("class","delete");
+                  del.setAttribute("id",all[i].ID);
+                  del.onclick = function() {
+                    var request = new XMLHttpRequest();
+                    request.onreadystatechange = function() {
+                      if (this.readyState == 4 && this.status == 200) {
+                        console.log(this.responseText);
+                        ALL();
+                      }  
+                    }
+                    request.open("POST", "/php/stergere.php", true);
+                    request.setRequestHeader("Content-type", "application/application/json");
+                    request.send(JSON.stringify({ID:this.id}));  
+                  }
+                  td.appendChild(del);
+                  tr.appendChild(td);
                   tabel.appendChild(tr);
                 }
-                modal.style.display = "block";
-                span.onclick = function() {
-                  modal.style.display = "none";
-                    while(1 < tabel.rows.length)
-                      tabel.deleteRow(1);
-
-                }
-                window.onclick = function(event) {
-                  if (event.target == modal) {
-                    modal.style.display = "none";
-                    
-                    while(1 < tabel.rows.length)
-                      tabel.deleteRow(1);
-                  }
+                
                 }   
               }
             }  
-          }
           check.open("POST", "/php/check.php", true);
           check.setRequestHeader("Content-type", "application/application/json");
           check.send(JSON.stringify({nume:'ALL', prenume:'ALL'}));  
