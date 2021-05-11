@@ -192,6 +192,22 @@
       background-color: #c040b5;
       color: white;
     }
+    .delete {
+      padding: 16px;
+      font-size: 16px;
+      background-color: gray;
+      color: black;
+      border: none;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      border-radius: 8px;
+      outline: none;
+    }
+    .delete:active {
+      background-color: #272727;
+      transform: translateY(5px);
+    }
     </style>
   </head>
   <body>
@@ -283,6 +299,25 @@
                 tr.appendChild(td);
                 td = document.createElement("td");
                 td.innerHTML= all[i].cnp_org;
+                tr.appendChild(td);
+                td = document.createElement('td');
+                del = document.createElement('button');
+                del.innerHTML = "Eliminare";
+                del.setAttribute("class","delete");
+                del.setAttribute("id",all[i].ID);
+                del.onclick = function() {
+                  var request = new XMLHttpRequest();
+                  request.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                      console.log(this.responseText);
+                      CLICK();
+                    }  
+                  }
+                  request.open("POST", "/php/stergere.php", true);
+                  request.setRequestHeader("Content-type", "application/application/json");
+                  request.send(JSON.stringify({ID:this.id}));  
+                }
+                td.appendChild(del);
                 tr.appendChild(td);
                 tabel.appendChild(tr);
               }  
