@@ -1,7 +1,7 @@
 <?php
 $servername = "localhost";
 $username = "firma";
-$password = "12345";
+$password = "firma2002";
 $dbname = "firma";
 
 
@@ -13,6 +13,7 @@ if (!$conn) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $_POST = json_decode(file_get_contents('php://input'), true);
-  $sql = "INSERT INTO angajat(nume,prenume,cnp,data_n,salariu,functie) VALUES('" . $_POST['nume'] . "','" . $_POST['prenume'] . "','" . $_POST['cnp'] . "','" . $_POST['datan'] . "','" . $_POST['salariu'] . "','" . $_POST['functie'] . "');";
+  $sql = "INSERT INTO salariat(Nume,Prenume,CNP,Data_Nasterii,`Salariu(Euro)`,Specializare) VALUES('" . $_POST['nume'] . "','" . $_POST['prenume'] . "','" . $_POST['cnp'] . "','" . $_POST['datan'] . "','" . $_POST['salariu'] . "','" . $_POST['functie'] . "');";
   $result = mysqli_query($conn, $sql);
+  echo $sql;
 }

@@ -1,7 +1,7 @@
 <?php
 $servername = "localhost";
 $username = "firma";
-$password = "12345";
+$password = "firma2002";
 $dbname = "firma";
 
 $conn = mysqli_connect($servername, $username, $password, $dbname);
@@ -12,9 +12,9 @@ if (!$conn) {
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $DATA = json_decode(file_get_contents('php://input'), true);
-    $sql = "SELECT * FROM angajat WHERE nume='".$DATA['nume']."' AND prenume='".$DATA['prenume']."';";
+    $sql = "SELECT * FROM salariat WHERE Nume='".$DATA['nume']."' AND Prenume='".$DATA['prenume']."';";
     if($DATA['nume'] == "ALL" && $DATA['prenume'] == "ALL")
-        $sql = "SELECT * FROM angajat";
+        $sql = "SELECT * FROM salariat";
     $result = mysqli_query($conn, $sql);
 
     if(mysqli_num_rows($result) > 0) {
@@ -26,4 +26,3 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     } else 
         echo "NULL";
     }
-?>

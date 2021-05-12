@@ -31,7 +31,7 @@ $RETURN = "NULL";
                 ($_POST['api'] == 'pacient') ? ($sql = "SELECT * FROM pacient WHERE nume='" . $_POST['nume'] . "' AND prenume='" . $_POST['prenume'] . "' AND cnp='" . $_POST['cnp'] . "';" and
                     $result = mysqli_query($conn, $sql) and
                     $RETURN = getData($result, $sql)) : (
-                    ($_POST['api'] == 'programari') ? ($sql = "SELECT * FROM programari WHERE ID_Pacient=(SELECT ID FROM pacient WHERE nume='" . $_POST['nume'] . "' AND prenume='" . $_POST['prenume'] . "' AND cnp='" . $_POST['cnp'] . "');" and
+                    ($_POST['api'] == 'programari') ? ($sql = "SELECT programari.ID,programari.data,doctor.nume,doctor.prenume,consultatii.tip,consultatii.specializare FROM ((programari INNER JOIN doctor ON programari.ID_Doctor  = doctor.ID) INNER JOIN consultatii ON programari.ID_Consultatie = consultatii.ID) WHERE ID_Pacient=(SELECT ID FROM pacient WHERE nume='" . $_POST['nume'] . "' AND prenume='" . $_POST['prenume'] . "' AND cnp='" . $_POST['cnp'] . "');" and
                         $result = mysqli_query($conn, $sql) and
                         $RETURN = getData($result, $sql,)) : (
                         ($_POST['api'] == 'adaugaPacient') ? ($sql = "INSERT INTO pacient(nume,prenume,cnp) VALUES('" . $_POST['nume'] . "','" . $_POST['prenume'] . "','" . $_POST['cnp'] . "');" and
@@ -39,7 +39,9 @@ $RETURN = "NULL";
                             ($_POST['api'] == 'adaugaProgramare') ? ($sql = "INSERT INTO programari(ID_Pacient,ID_Doctor,data,ID_Consultatie) VALUES((SELECT ID FROM pacient WHERE nume='" . $_POST['nume'] . "' AND prenume='" . $_POST['prenume'] . "' AND cnp='" . $_POST['cnp'] . "'),(SELECT ID FROM doctor WHERE nume='" . $_POST['Dnume'] . "' AND prenume='" . $_POST['Dprenume'] . "' AND specializare='" . $_POST['specializare'] . "'),'" . $_POST['data'] . "',(SELECT ID FROM consultatii WHERE tip='" . $_POST['tip'] . "' AND specializare='" . $_POST['specializare'] . "'));" and
                                 $result = mysqli_query($conn, $sql))  : (
                                 ($_POST['api'] == 'istoric') ? ($sql = "UPDATE pacient SET istoric='" . $_POST['istoric'] . "' WHERE ID='" . $_POST['ID'] . "';" and
-                                    $result = mysqli_query($conn, $sql)) : (NULL))))))))) : (NULL);
+                                    $result = mysqli_query($conn, $sql)) : (
+                                    ($_POST['api'] == 'stergere') ? ($sql = "DELETE FROM programari WHERE ID='" . $_POST['ID'] . "';" and
+                                        $result = mysqli_query($conn, $sql)) : (NULL)))))))))) : (NULL);
 
 
 echo $RETURN;

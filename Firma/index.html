@@ -12,219 +12,107 @@
 
     body {
       display: flex;
-      background-color: #e7e6dd;
+      background-color: rgba(129, 164, 219,0.5);
     }
 
-    .loading {
-      display: block;
-      margin: auto;
+    .loader {
+      position: relative;
+      width: 80px;
+      height: 80px;
+      transform: rotate(165deg);
       position: absolute;
-      width: 100px;
-      height: 100px;
+      top: calc(50% + 20px);
+      left: calc(50% - 40px);
+      z-index: 1;
+    }
+    .loader:before,
+    .loader:after {
+      content: "";
+      position: absolute;
       top: 50%;
-      left: 47%;
-      z-index: -1;
-    }
-    .loading span {
+      left: 50%;
       display: block;
-      position: absolute;
-      width: 50%;
-      height: 50%;
-    }
-    .loading span:nth-child(1) {
-      top: 0;
-      left: 0;
-      background-color: rgba(66, 133, 244, 0.75);
-      -webkit-animation: move1 5s linear infinite;
-              animation: move1 5s linear infinite;
-    }
-    .loading span:nth-child(2) {
-      top: 0;
-      right: 0;
-      background-color: rgba(219, 68, 55, 0.75);
-      -webkit-animation: move2 5s linear infinite;
-              animation: move2 5s linear infinite;
-    }
-    .loading span:nth-child(3) {
-      bottom: 0;
-      left: 0;
-      background-color: rgba(244, 180, 0, 0.75);
-      -webkit-animation: move3 5s linear infinite;
-              animation: move3 5s linear infinite;
-    }
-    .loading span:nth-child(4) {
-      bottom: 0;
-      right: 0;
-      background-color: rgba(15, 157, 88, 0.75);
-      -webkit-animation: move4 5s linear infinite;
-              animation: move4 5s linear infinite;
+      width: 16px;
+      height: 16px;
+      border-radius: 8px;
+      transform: translate(-50%, -50%);
     }
 
-    @-webkit-keyframes move1 {
+    .loader:before {
+      animation: before 2s infinite;
+    }
+
+    .loader:after {
+      animation: after 2s infinite;
+    }
+
+    @keyframes before {
       0% {
-        transform: translate(0);
-        z-index: 10;
+        width: 16px;
+        box-shadow: 32px -16px rgba(225, 20, 98, 1),
+          -32px 16px rgba(111, 202, 220, 1);
       }
-      25% {
-        transform: translate(100%, 0);
+
+      35% {
+        width: 80px;
+        box-shadow: 0px -16px rgba(225, 20, 98, 1),
+          0px 16px rgba(111, 202, 220, 1);
       }
-      50% {
-        transform: translate(100%, 100%);
+
+      70% {
+        width: 16px;
+        box-shadow: -32px -16px rgba(225, 20, 98, 1),
+          32px 16px rgba(111, 202, 220, 1);
       }
-      75% {
-        transform: translate(0, 100%);
-        z-index: 0;
-      }
+
       100% {
-        transform: translate(0);
+        width: 16px;
+        box-shadow: 32px -16px rgba(225, 20, 98, 1),
+          -32px 16px rgba(111, 202, 220, 1);
       }
     }
 
-    @keyframes move1 {
+    @keyframes after {
       0% {
-        transform: translate(0);
-        z-index: 10;
+        height: 16px;
+        box-shadow: 16px 32px rgba(61, 184, 143, 1),
+          -16px -32px rgba(233, 169, 32, 1);
       }
-      25% {
-        transform: translate(100%, 0);
+
+      35% {
+        height: 80px;
+        box-shadow: 16px 0px rgba(61, 184, 143, 1),
+          -16px 0px rgba(233, 169, 32, 1);
       }
-      50% {
-        transform: translate(100%, 100%);
+
+      70% {
+        height: 32px;
+        box-shadow: 16px -32px rgba(61, 184, 143, 1),
+          -16px 32px rgba(233, 169, 32, 1);
       }
-      75% {
-        transform: translate(0, 100%);
-        z-index: 0;
-      }
+
       100% {
-        transform: translate(0);
+        box-shadow: 16px 32px rgba(61, 184, 143, 1),
+          -16px -32px rgba(233, 169, 32, 1);
       }
     }
-    @-webkit-keyframes move2 {
-      0% {
-        transform: translate(0);
-      }
-      25% {
-        transform: translate(0, 100%);
-      }
-      50% {
-        transform: translate(-100%, 100%);
-        z-index: 0;
-      }
-      75% {
-        transform: translate(-100%, 0);
-        z-index: 10;
-      }
-      100% {
-        transform: translate(0);
-      }
-    }
-    @keyframes move2 {
-      0% {
-        transform: translate(0);
-      }
-      25% {
-        transform: translate(0, 100%);
-      }
-      50% {
-        transform: translate(-100%, 100%);
-        z-index: 0;
-      }
-      75% {
-        transform: translate(-100%, 0);
-        z-index: 10;
-      }
-      100% {
-        transform: translate(0);
-      }
-    }
-    @-webkit-keyframes move3 {
-      0% {
-        transform: translate(0);
-      }
-      25% {
-        transform: translate(0, -100%);
-        z-index: 10;
-      }
-      50% {
-        transform: translate(100%, -100%);
-      }
-      75% {
-        transform: translate(100%, 0);
-      }
-      100% {
-        transform: translate(0);
-        z-index: 0;
-      }
-    }
-    @keyframes move3 {
-      0% {
-        transform: translate(0);
-      }
-      25% {
-        transform: translate(0, -100%);
-        z-index: 10;
-      }
-      50% {
-        transform: translate(100%, -100%);
-      }
-      75% {
-        transform: translate(100%, 0);
-      }
-      100% {
-        transform: translate(0);
-        z-index: 0;
-      }
-    }
-    @-webkit-keyframes move4 {
-      0% {
-        transform: translate(0);
-      }
-      25% {
-        transform: translate(-100%, 0);
-        z-index: 0;
-      }
-      50% {
-        transform: translate(-100%, -100%);
-        z-index: 10;
-      }
-      75% {
-        transform: translate(0, -100%);
-      }
-      100% {
-        transform: translate(0);
-      }
-    }
-    @keyframes move4 {
-      0% {
-        transform: translate(0);
-      }
-      25% {
-        transform: translate(-100%, 0);
-        z-index: 0;
-      }
-      50% {
-        transform: translate(-100%, -100%);
-        z-index: 10;
-      }
-      75% {
-        transform: translate(0, -100%);
-      }
-      100% {
-        transform: translate(0);
-      }
-    }
+
     .box {
-      margin: auto;
-      margin-top: 200px;
+      left: 25%;
+      top: 200px;
       width: 50%;
       height: 400px;
       background-color: white;
-      opacity: 0.5;
       padding: 10px;
+      border-style: solid;
+      border-width: 1px;
+      border-color: black;
+      position: absolute;
+
     }
     .title {
       text-align: center;
-      font-family: "Lucida Console", "Monaco", Monospace;
+      font-family: Arial, Helvetica, sans-serif;
       font-size: 200%;
     }
     .input, .label {
@@ -234,7 +122,7 @@
       font-size: 130%;
     }
     .label {
-      font-family: "Lucida Console", "Monaco", Monospace;
+      font-family: Arial, Helvetica, sans-serif;
       width: 40%;
       display:inline-block;
     }
@@ -257,7 +145,7 @@
       padding: 20px;
       border: 1px solid #888;
       width: 80%;
-      box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+      box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,19);
       animation-name: animatetop;
       animation-duration: 0.6s
     }
@@ -286,7 +174,7 @@
       to {top:0; opacity:1}
     }
     .all {
-      background-color: #ff8040;
+      background-color: rgb(209, 132, 132);
       color: black;
       font-size: 20px;
       padding: 16px;
@@ -296,15 +184,13 @@
       text-decoration: none;
       display: inline-block;
       position: absolute;
-      right: 25%;
-      bottom: 30%;
-      margin-right: 10px;
-      margin-bottom: 20px;
+      right: 300px;
+      bottom: 5px;
       outline: none;
     }
     .all:active {
-      background-color: #ff661c;
-      transform: translateY(5px) translateX(5px);
+      background-color: rgb(214, 139, 139);
+      transform: translateY(2.5px) translateX(2.5px);
     }
     table{
       font-family: Arial, Helvetica, sans-serif;
@@ -341,7 +227,7 @@
       transform: translateY(5px);
     }
     .add {
-      background-color: #ff8040;
+      background-color: rgb(209, 132, 132);
       color: black;
       font-size: 20px;
       padding: 16px;
@@ -351,25 +237,18 @@
       text-decoration: none;
       display: inline-block;
       position: absolute;
-      left: 25%;
-      bottom: 30%;
-      margin-left: 10px;
-      margin-bottom: 20px;
+      left: 300px;
+      bottom: 5px;
       outline: none;
     }
     .add:active {
-      background-color: #ff661c;
-      transform: translateY(5px) translateX(-5px);
+      background-color: rgb(214, 139, 139);
+      transform: translateY(2.5px) translateX(2.5px);
     }
     </style>
   </head>
   <body>
-    <span class="loading">
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-    </span>
+    <div class="loader"></div>
     <div class="box" id="content">
       <h3 class="title">ATESTAT SRL</h3>
       <label class="label">Nume:</label>
@@ -377,7 +256,7 @@
       <label class="label">Prenume:</label>
       <input id="prenume"class="input" type="text" onchange="check()">
       <button class="all" onclick="ALL()">ALL</button>
-      <button class="add" onclick="ADD()">ADD</button>``
+      <button class="add" onclick="ADD()">ADD</button>
     </div>
     <div id="mod" class="modal">
       <div class="modal-content">
@@ -388,9 +267,8 @@
             <th>Prenume</th>
             <th>CNP</th>
             <th>Data Nasterii</th>
-            <th>Vechime</th>
-            <th>Salariu</th>
-            <th>Functie</th>
+            <th>Salariu(Euro)</th>
+            <th>Specializare</th>
           </tr>
         </table>
       </div>
@@ -439,6 +317,7 @@
             var sql = new XMLHttpRequest();
               sql.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
+                  console.log(this.responseText);
                   var modal = document.getElementById("modAdd");
                   modal.style.display = "none";
                 }
@@ -479,25 +358,22 @@
                 for(var i = 0; i < all.length; i++){
                   var tr = document.createElement("tr");
                   var td = document.createElement("td");
-                  td.innerHTML= all[i].nume;
+                  td.innerHTML= all[i].Nume;
                   tr.appendChild(td);
                   td = document.createElement("td");
-                  td.innerHTML= all[i].prenume;
+                  td.innerHTML= all[i].Prenume;
                   tr.appendChild(td);
                   td = document.createElement("td");
-                  td.innerHTML= all[i].cnp;
+                  td.innerHTML= all[i].CNP;
                   tr.appendChild(td);
                   td = document.createElement("td");
-                  td.innerHTML= all[i].data_n;
+                  td.innerHTML= all[i].Data_Nasterii;
                   tr.appendChild(td);
                   td = document.createElement("td");
-                  td.innerHTML= all[i].data_a;
+                  td.innerHTML= all[i]['Salariu(Euro)'];
                   tr.appendChild(td);
                   td = document.createElement("td");
-                  td.innerHTML= all[i].salariu;
-                  tr.appendChild(td);
-                  td = document.createElement("td");
-                  td.innerHTML= all[i].functie;
+                  td.innerHTML= all[i].Specializare;
                   tr.appendChild(td);
                   td = document.createElement('td');
                   del = document.createElement('button');
@@ -546,25 +422,22 @@
                 for(var i = 0; i < all.length; i++){
                   var tr = document.createElement("tr");
                   var td = document.createElement("td");
-                  td.innerHTML= all[i].nume;
+                  td.innerHTML= all[i].Nume;
                   tr.appendChild(td);
                   td = document.createElement("td");
-                  td.innerHTML= all[i].prenume;
+                  td.innerHTML= all[i].Prenume;
                   tr.appendChild(td);
                   td = document.createElement("td");
-                  td.innerHTML= all[i].cnp;
+                  td.innerHTML= all[i].CNP;
                   tr.appendChild(td);
                   td = document.createElement("td");
-                  td.innerHTML= all[i].data_n;
+                  td.innerHTML= all[i].Data_Nasterii;
                   tr.appendChild(td);
                   td = document.createElement("td");
-                  td.innerHTML= all[i].data_a;
+                  td.innerHTML= all[i]['Salariu(Euro)'];
                   tr.appendChild(td);
                   td = document.createElement("td");
-                  td.innerHTML= all[i].salariu;
-                  tr.appendChild(td);
-                  td = document.createElement("td");
-                  td.innerHTML= all[i].functie;
+                  td.innerHTML= all[i].Specializare;
                   tr.appendChild(td);
                   tabel.appendChild(tr);
                 }

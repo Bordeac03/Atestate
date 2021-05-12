@@ -1,7 +1,7 @@
 <?php
 $servername = "localhost";
 $username = "firma";
-$password = "12345";
+$password = "firma2002";
 $dbname = "firma";
 
 
@@ -13,6 +13,6 @@ if (!$conn) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $_POST = json_decode(file_get_contents('php://input'), true);
-  $sql = "DELETE FROM angajat WHERE ID=" . $_POST['ID'] . ";";
+  $sql = "DELETE FROM salariat WHERE ID=" . $_POST['ID'] . ";";
   $result = mysqli_query($conn, $sql);
 }

@@ -520,7 +520,7 @@
       background-color: bisque;
     }
     .input, .label {
-      width : 90%;
+      width : 98%;
       padding: 10px;
       margin: 5px;
       font-size: 130%;
@@ -566,6 +566,41 @@
     @keyframes animatetop {
       from {top: -300px; opacity: 0}
       to {top: 0; opacity: 1}
+    }
+    table{
+      font-family: Arial, Helvetica, sans-serif;
+      border-collapse: collapse;
+      width: 98%;
+      margin: 5px;
+    }
+    td,th {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+    tr:nth-child(even){background-color: #f2f2f2;}
+    tr:hover {background-color: #ddd;}
+    th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: left;
+      background-color: #ff8040;
+      color: white;
+    }
+    .delete {
+      padding: 16px;
+      font-size: 16px;
+      background-color: gray;
+      color: black;
+      border: none;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      border-radius: 8px;
+      outline: none;
+    }
+    .delete:active {
+      background-color: #272727;
+      transform: translateY(5px);
     }
     </style>
   </head>
@@ -854,6 +889,18 @@
         <select id="consultatie" name="consultatie" class="input" onchange="StageTwo()"></select>
         <label class="label">Data programarii</label>
         <input id="date" class="input" type="datetime-local" onchange="StageTwo()">
+        <table id="tabel">
+          <tr>
+            <th>Nume</th>
+            <th>Prenume</th>
+            <th>CNP</th>
+            <th>Doctor</th>
+            <th>Specializare</th>
+            <th>Consultatie</th>
+            <th>Data</th>
+            <th>Anulati?</th>
+          </tr>
+        </table>
       </div>
     </div>
     <script>
@@ -896,6 +943,69 @@
         }
         if(NUME != "" && PRENUME != "" && CNP != "" && CNP.match(/^[0-9]+$/) != null && CNP.length == 13) {
           modal.style.display = "block";
+          var tabel = document.getElementById("tabel");
+          while(1 < tabel.rows.length)
+            tabel.deleteRow(1);
+
+          var check = new XMLHttpRequest();
+          check.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+              console.log(this.responseText);
+              if(this.responseText != "NULL") {
+                console.log(this.responseText);
+                var all = JSON.parse(this.responseText);
+                for(var i = 0; i < all.length; i++) {
+                  var tr = document.createElement("tr");
+                  var td = document.createElement("td");
+                  td.innerHTML= NUME;
+                  tr.appendChild(td);
+                  td = document.createElement("td");
+                  td.innerHTML= PRENUME;
+                  tr.appendChild(td);
+                  td = document.createElement("td");
+                  td.innerHTML= CNP;
+                  tr.appendChild(td);
+                  td = document.createElement("td");
+                  td.innerHTML= all[i].nume + " " + all[i].prenume;
+                  tr.appendChild(td);
+                  td = document.createElement("td");
+                  td.innerHTML= all[i].specializare;
+                  tr.appendChild(td);
+                  td = document.createElement("td");
+                  td.innerHTML= all[i].tip;
+                  tr.appendChild(td);
+                  td = document.createElement("td");
+                  td.innerHTML= all[i].data;
+                  tr.appendChild(td);
+                  td = document.createElement('td');
+                  del = document.createElement('button');
+                  del.innerHTML = "Eliminare";
+                  del.setAttribute("class","delete");
+                  del.setAttribute("id",all[i].ID);
+                  del.onclick = function() {
+                    var request = new XMLHttpRequest();
+                    request.onreadystatechange = function() {
+                      if (this.readyState == 4 && this.status == 200) {
+                        console.log(this.responseText);
+                        onChange();
+                      }  
+                    }
+                    request.open("POST", "/api/api.php", true);
+                    request.setRequestHeader("Content-type", "application/application/json");
+                    request.send(JSON.stringify({api:"stergere",ID:this.id}));  
+                  }
+                  td.appendChild(del);
+                  tr.appendChild(td);
+                  tabel.appendChild(tr);
+                }
+                
+                }   
+              }
+            }  
+          check.open("POST", "/api/api.php", true);
+          check.setRequestHeader("Content-type", "application/application/json");
+          check.send(JSON.stringify({api:"programari",nume:NUME,prenume:PRENUME,cnp:CNP}));
+
           var request = new XMLHttpRequest();
           request.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
