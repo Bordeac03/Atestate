@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang='ro'>
+<head>
+<title>Atestat</title>
+	<meta charset='utf-8'>
+	<style>
+* 
+{
+font-family:Times New Roman;
+}
+h1{ font-size:20pt;
+}
+h2{font-size:20pt;
+}
+input {font-size:20pt;
+
+}
+</style>
+</head>
+<body bgcolor="AF EE EE">
+<?php
+if($_SERVER['REQUEST_METHOD']=='POST')
+{
+$server='localhost';
+$bd='atestat';
+$user='lavi_ioana';
+$parola='abracadabra';
+
+$conexiune=@mysqli_connect($server,$user,$parola,$bd);
+$conexiune or die("<b>Eroare la conectare!</b>");
+echo "<b>Conectare cu succes la serverul SQL!</b><br>";
+
+$interogare='insert into inscrieri values (null,';
+// PHP . lipeste siruri
+$interogare.="'".$_POST['nume']."',";
+$interogare.="'".$_POST['prenume']."',";
+$interogare.="'".$_POST['telefon']."',";
+$interogare.="'".$_POST['email']."')";
+mysqli_query($conexiune,$interogare);
+
+if(mysqli_affected_rows($conexiune)==1)
+{
+	echo "<div id='b'><h2 align='center' >Te-ai înscris la examen!</h2><br>";
+	
+}
+else
+    echo "<h2 align='center'>Înscriere eșuată!</h2><br></div>";
+
+mysqli_close($conexiune);
+}
+else{
+
+?>
+
+<img src="condus.jpg" width="50%" height="200">
+<h1 align='center'>Examenul teoretic pentru obtinerea permisului de conducere categoria B</h1>
+<form id="afiseaza" action="3ATESTAT.html" method="post">
+<h2>Nume: </h2>
+<input type="text" name="nume" ><br>
+<h2>Prenume:</h2>
+<input type="text" name="prenume"><br>
+<h2>Numar de telefon:</h2>
+<input type="text" name="telefon"><br>
+<h2>Email:</h2>
+<input type="text" name="email"><br>
+<input type="submit" value="Incepe testul!">
+</form>
+</body>
+<?php
+
+}	
+?>

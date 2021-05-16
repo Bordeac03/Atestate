@@ -602,6 +602,101 @@
       background-color: #272727;
       transform: translateY(5px);
     }
+    #map {
+      height: 400px;
+      /* The height is 400 pixels */
+      width: 100%;
+      /* The width is the width of the web page */
+    }
+    .mySlides {display: none;margin-left:5%; width: 90%;}
+    img {vertical-align: middle;}
+
+    .slideshow-container {
+      max-width: 1000px;
+      position: relative;
+      margin: auto;
+    }
+    .prev, .next {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      width: auto;
+      padding: 16px;
+      margin-top: -22px;
+      color: white;
+      font-weight: bold;
+      font-size: 18px;
+      transition: 0.6s ease;
+      border-radius: 0 3px 3px 0;
+      user-select: none;
+    }
+    .next {
+      right: 0;
+      border-radius: 3px 0 0 3px;
+    }
+
+    .prev:hover, .next:hover {
+      background-color: rgba(0,0,0,0.8);
+    }
+
+    .text {
+      color: #f2f2f2;
+      font-size: 15px;
+      padding: 8px 12px;
+      position: absolute;
+      bottom: 8px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .numbertext {
+      color: #f2f2f2;
+      font-size: 12px;
+      padding: 8px 12px;
+      position: absolute;
+      top: 0;
+    }
+
+    .dot {
+      cursor: pointer;
+      height: 15px;
+      width: 15px;
+      margin: 0 2px;
+      background-color: #bbb;
+      border-radius: 50%;
+      display: inline-block;
+      transition: background-color 0.6s ease;
+    }
+
+    .active, .dot:hover {
+      background-color: #717171;
+    }
+
+
+    .fade {
+      -webkit-animation-name: fade;
+      -webkit-animation-duration: 1.5s;
+      animation-name: fade;
+      animation-duration: 1.5s;
+    }
+
+    @-webkit-keyframes fade {
+      from {opacity: .4} 
+      to {opacity: 1}
+    }
+
+    @keyframes fade {
+      from {opacity: .4} 
+      to {opacity: 1}
+    }
+
+    @media only screen and (max-width: 300px) {
+      .prev, .next,.text {font-size: 11px}
+    }
+    p
+    {
+      font-size: large;
+    }
     </style>
   </head>
   <body>
@@ -852,18 +947,93 @@
     <div id="myNav" class="overlay">
       <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
       <div class="overlay-content">
-        <a href="#acasa">Acasa</a>
-        <a href="#programari">Programari</a>
-        <a href="#despre">Despre</a>
+        <a href="#acasa" onclick="closeNav()">Acasa</a>
+        <a href="#programari" onclick="closeNav()">Programari</a>
+        <a href="#despre" onclick="closeNav()">Despre</a>
       </div>
     </div>
     <div class="sus">
       <button class="all" onclick="openNav()">MENU</button>
-      <h3 class="title">Клиника здесь для вас</h3>
+      <h3 class="title">Clinica Goodhealth</h3>
     </div>
     <div class="content">
       <div id="acasa">
         <h3>Acasa</h3>
+        <h1>Clinica Goodhealth: cea mai bună alegere pentru sănătatea ta!</h1>
+        <p>
+        Grijă pentru pacienți, profesionalism, inovație medicală: iată câteva dintre valorile urmărite
+        de către personalul clinicii noastre. Credem că un pas către o lume mai bună se face începând cu
+        fiecare pacient care părăsește cu zâmbetul pe buze cabinetul medical. De aceea, îți vom fi alături
+        oricând vei avea nevoie de serviciile noastre.
+        </p>
+
+        <div class="slideshow-container">
+
+        <div class="mySlides fade">
+          <div class="numbertext">1 / 3</div>
+          <img src="./img/poza.jpg" style="width:100% ; height:450px;">
+          <div class="text" style="color:black">Cabinete igienice</div>
+        </div>
+
+        <div class="mySlides fade">
+          <div class="numbertext">2 / 3</div>
+          <img src="./img/poza2.jpg" style="width:100% ; height:450px;">
+          <div class="text" style="color:black">Medici profesioniști</div>
+        </div>
+
+        <div class="mySlides fade">
+          <div class="numbertext">3 / 3</div>
+          <img src="./img/poza3.jpg" style="width:100% ; height:450px;">
+          <div class="text" style="color:black">Grijă pentru pacienți</div>
+        </div>
+
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+        </div>
+        <br>
+
+        <div style="text-align:center">
+          <span class="dot" onclick="currentSlide(1)"></span> 
+          <span class="dot" onclick="currentSlide(2)"></span> 
+          <span class="dot" onclick="currentSlide(3)"></span> 
+        </div>
+
+        <script>
+        var slideIndex = 1;
+        showSlides(slideIndex);
+
+        function plusSlides(n) {
+          showSlides(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+          showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+          var i;
+          var slides = document.getElementsByClassName("mySlides");
+          var dots = document.getElementsByClassName("dot");
+          if (n > slides.length) {slideIndex = 1}    
+          if (n < 1) {slideIndex = slides.length}
+          for (i = 0; i < slides.length; i++) {
+              slides[i].style.display = "none";  
+          }
+          for (i = 0; i < dots.length; i++) {
+              dots[i].className = dots[i].className.replace(" active", "");
+          }
+          slides[slideIndex-1].style.display = "block";  
+          dots[slideIndex-1].className += " active";
+        }
+        </script>
+        <h2> Fii informat cu ce se întâmplă în jurul tău</h2>
+        <ul>
+        <li><a href="https://gov.ro/ro/info-coronavirus-covid-19"  target="_blank">Sars-Cov-2:informează-te!</a></li>
+        <li><a href="https://www.who.int/"  target="_blank">Organizația Mondială a Sănătății</a></li>
+        <li><a href="https://vegis.ro/blog/category/remedii-si-tratamente-naturiste/"  target="_blank">Medicamente naturiste</a></li>
+        <li><a href="https://www.myprotein.ro/"  target="_blank">Suplimente naturiste</a></li>
+        </ul>
       </div>
       <div id="programari">
         <h3>Programari</h3>
@@ -876,6 +1046,13 @@
       </div>
       <div id="despre">
         <h3>Despre</h3>
+        <p>email: test@gmail.com</p>
+        <p>telefon: 0734236564</p>
+        <div id="map"></div>
+        <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7cwZwWDObNecKDtsEaMwIhdETjSYeqT8&callback=initMap&libraries=&v=weekly"
+        async
+      ></script>
       </div>
     </div>
     <div id="modal">
@@ -904,12 +1081,58 @@
       </div>
     </div>
     <script>
+
+      let map, infoWindow;
+
+      function initMap() {
+        map = new google.maps.Map(document.getElementById("map"), {
+          center: { lat: 44.56402516376217, lng: 27.354176044464115 },
+          zoom: 18,
+        });
+        infoWindow = new google.maps.InfoWindow();
+        const locationButton = document.createElement("button");
+        locationButton.textContent = "Pan to Current Location";
+        locationButton.classList.add("custom-map-control-button");
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
+        locationButton.addEventListener("click", () => {
+          // Try HTML5 geolocation.
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+              (position) => {
+                const pos = {
+                  lat: position.coords.latitude,
+                  lng: position.coords.longitude,
+                };
+                infoWindow.setPosition(pos);
+                infoWindow.setContent("Location found.");
+                infoWindow.open(map);
+                map.setCenter(pos);
+              },
+              () => {
+                handleLocationError(true, infoWindow, map.getCenter());
+              }
+            );
+          } else {
+            // Browser doesn't support Geolocation
+            handleLocationError(false, infoWindow, map.getCenter());
+          }
+        });
+      }
+
+      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(
+          browserHasGeolocation
+            ? "Error: The Geolocation service failed."
+            : "Error: Your browser doesn't support geolocation."
+        );
+        infoWindow.open(map);
+      }
       function openNav() {
         document.getElementById("myNav").style.height = "100%";
         document.getElementsByClassName("all")[0].style.display = "none";
         document.getElementsByClassName("content")[0].style.zIndex = "-1";
       }
-
       function closeNav() {
         document.getElementById("myNav").style.height = "0%";
         setTimeout(() => {  
@@ -942,70 +1165,7 @@
           }
         }
         if(NUME != "" && PRENUME != "" && CNP != "" && CNP.match(/^[0-9]+$/) != null && CNP.length == 13) {
-          modal.style.display = "block";
-          var tabel = document.getElementById("tabel");
-          while(1 < tabel.rows.length)
-            tabel.deleteRow(1);
-
-          var check = new XMLHttpRequest();
-          check.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-              console.log(this.responseText);
-              if(this.responseText != "NULL") {
-                console.log(this.responseText);
-                var all = JSON.parse(this.responseText);
-                for(var i = 0; i < all.length; i++) {
-                  var tr = document.createElement("tr");
-                  var td = document.createElement("td");
-                  td.innerHTML= NUME;
-                  tr.appendChild(td);
-                  td = document.createElement("td");
-                  td.innerHTML= PRENUME;
-                  tr.appendChild(td);
-                  td = document.createElement("td");
-                  td.innerHTML= CNP;
-                  tr.appendChild(td);
-                  td = document.createElement("td");
-                  td.innerHTML= all[i].nume + " " + all[i].prenume;
-                  tr.appendChild(td);
-                  td = document.createElement("td");
-                  td.innerHTML= all[i].specializare;
-                  tr.appendChild(td);
-                  td = document.createElement("td");
-                  td.innerHTML= all[i].tip;
-                  tr.appendChild(td);
-                  td = document.createElement("td");
-                  td.innerHTML= all[i].data;
-                  tr.appendChild(td);
-                  td = document.createElement('td');
-                  del = document.createElement('button');
-                  del.innerHTML = "Eliminare";
-                  del.setAttribute("class","delete");
-                  del.setAttribute("id",all[i].ID);
-                  del.onclick = function() {
-                    var request = new XMLHttpRequest();
-                    request.onreadystatechange = function() {
-                      if (this.readyState == 4 && this.status == 200) {
-                        console.log(this.responseText);
-                        onChange();
-                      }  
-                    }
-                    request.open("POST", "/api/api.php", true);
-                    request.setRequestHeader("Content-type", "application/application/json");
-                    request.send(JSON.stringify({api:"stergere",ID:this.id}));  
-                  }
-                  td.appendChild(del);
-                  tr.appendChild(td);
-                  tabel.appendChild(tr);
-                }
-                
-                }   
-              }
-            }  
-          check.open("POST", "/api/api.php", true);
-          check.setRequestHeader("Content-type", "application/application/json");
-          check.send(JSON.stringify({api:"programari",nume:NUME,prenume:PRENUME,cnp:CNP}));
-
+          
           var request = new XMLHttpRequest();
           request.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
@@ -1015,12 +1175,180 @@
                   request.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
                       console.log(this.responseText);
+                      modal.style.display = "block";
+                      var tabel = document.getElementById("tabel");
+                      while(1 < tabel.rows.length)
+                        tabel.deleteRow(1);
+
+                      var check = new XMLHttpRequest();
+                      check.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                          console.log(this.responseText);
+                          if(this.responseText != "NULL") {
+                            console.log(this.responseText);
+                            var all = JSON.parse(this.responseText);
+                            for(var i = 0; i < all.length; i++) {
+                              var tr = document.createElement("tr");
+                              var td = document.createElement("td");
+                              td.innerHTML= NUME;
+                              tr.appendChild(td);
+                              td = document.createElement("td");
+                              td.innerHTML= PRENUME;
+                              tr.appendChild(td);
+                              td = document.createElement("td");
+                              td.innerHTML= CNP;
+                              tr.appendChild(td);
+                              td = document.createElement("td");
+                              td.innerHTML= all[i].nume + " " + all[i].prenume;
+                              tr.appendChild(td);
+                              td = document.createElement("td");
+                              td.innerHTML= all[i].specializare;
+                              tr.appendChild(td);
+                              td = document.createElement("td");
+                              td.innerHTML= all[i].tip;
+                              tr.appendChild(td);
+                              td = document.createElement("td");
+                              td.innerHTML= all[i].data;
+                              tr.appendChild(td);
+                              td = document.createElement('td');
+                              del = document.createElement('button');
+                              del.innerHTML = "Eliminare";
+                              del.setAttribute("class","delete");
+                              del.setAttribute("id",all[i].ID);
+                              del.onclick = function() {
+                                var request = new XMLHttpRequest();
+                                request.onreadystatechange = function() {
+                                  if (this.readyState == 4 && this.status == 200) {
+                                    console.log(this.responseText);
+                                    onChange();
+                                  }  
+                                }
+                                request.open("POST", "/api/api.php", true);
+                                request.setRequestHeader("Content-type", "application/application/json");
+                                request.send(JSON.stringify({api:"stergere",ID:this.id}));  
+                              }
+                              td.appendChild(del);
+                              tr.appendChild(td);
+                              tabel.appendChild(tr);
+                            }
+                            
+                            }   
+                          }
+                        }  
+                      check.open("POST", "/api/api.php", true);
+                      check.setRequestHeader("Content-type", "application/application/json");
+                      check.send(JSON.stringify({api:"programari",nume:NUME,prenume:PRENUME,cnp:CNP}));
+
+                      
+                      check = new XMLHttpRequest();
+                      check.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                          var data = JSON.parse(this.responseText);
+                          while(specializare.length)
+                          specializare.remove(0);
+                          var option = document.createElement('option');
+                          for(var i = 0; i < data.length; i++) {
+                            option = document.createElement('option');
+                            option.innerHTML = data[i].specializare;
+                            option.setAttribute('id',i);
+                            specializare.appendChild(option);
+                          }
+                        }  
+                      }
+                      check.open("POST", "/api/api.php", true);
+                      check.setRequestHeader("Content-type", "application/application/json");
+                      check.send(JSON.stringify({api:"specializari"}));
                     }  
                   }
                   request.open("POST", "/api/api.php", true);
                   request.setRequestHeader("Content-type", "application/application/json");
                   request.send(JSON.stringify({api:"adaugaPacient",nume:NUME,prenume:PRENUME,cnp:CNP}));
-                } else return;
+                }
+              } else {
+                modal.style.display = "block";
+                      var tabel = document.getElementById("tabel");
+                      while(1 < tabel.rows.length)
+                        tabel.deleteRow(1);
+
+                      var check = new XMLHttpRequest();
+                      check.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                          console.log(this.responseText);
+                          if(this.responseText != "NULL") {
+                            console.log(this.responseText);
+                            var all = JSON.parse(this.responseText);
+                            for(var i = 0; i < all.length; i++) {
+                              var tr = document.createElement("tr");
+                              var td = document.createElement("td");
+                              td.innerHTML= NUME;
+                              tr.appendChild(td);
+                              td = document.createElement("td");
+                              td.innerHTML= PRENUME;
+                              tr.appendChild(td);
+                              td = document.createElement("td");
+                              td.innerHTML= CNP;
+                              tr.appendChild(td);
+                              td = document.createElement("td");
+                              td.innerHTML= all[i].nume + " " + all[i].prenume;
+                              tr.appendChild(td);
+                              td = document.createElement("td");
+                              td.innerHTML= all[i].specializare;
+                              tr.appendChild(td);
+                              td = document.createElement("td");
+                              td.innerHTML= all[i].tip;
+                              tr.appendChild(td);
+                              td = document.createElement("td");
+                              td.innerHTML= all[i].data;
+                              tr.appendChild(td);
+                              td = document.createElement('td');
+                              del = document.createElement('button');
+                              del.innerHTML = "Eliminare";
+                              del.setAttribute("class","delete");
+                              del.setAttribute("id",all[i].ID);
+                              del.onclick = function() {
+                                var request = new XMLHttpRequest();
+                                request.onreadystatechange = function() {
+                                  if (this.readyState == 4 && this.status == 200) {
+                                    console.log(this.responseText);
+                                    onChange();
+                                  }  
+                                }
+                                request.open("POST", "/api/api.php", true);
+                                request.setRequestHeader("Content-type", "application/application/json");
+                                request.send(JSON.stringify({api:"stergere",ID:this.id}));  
+                              }
+                              td.appendChild(del);
+                              tr.appendChild(td);
+                              tabel.appendChild(tr);
+                            }
+                            
+                            }   
+                          }
+                        }  
+                      check.open("POST", "/api/api.php", true);
+                      check.setRequestHeader("Content-type", "application/application/json");
+                      check.send(JSON.stringify({api:"programari",nume:NUME,prenume:PRENUME,cnp:CNP}));
+
+                      
+                      check = new XMLHttpRequest();
+                      check.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                          var data = JSON.parse(this.responseText);
+                          while(specializare.length)
+                          specializare.remove(0);
+                          var option = document.createElement('option');
+                          for(var i = 0; i < data.length; i++) {
+                            option = document.createElement('option');
+                            option.innerHTML = data[i].specializare;
+                            option.setAttribute('id',i);
+                            specializare.appendChild(option);
+                          }
+                        }  
+                      }
+                      check.open("POST", "/api/api.php", true);
+                      check.setRequestHeader("Content-type", "application/application/json");
+                      check.send(JSON.stringify({api:"specializari"}));
+                   
               }
             }  
           }
@@ -1028,25 +1356,6 @@
           request.setRequestHeader("Content-type", "application/application/json");
           request.send(JSON.stringify({api:"pacient",nume:NUME,prenume:PRENUME,cnp:CNP}));
           
-          
-          request = new XMLHttpRequest();
-          request.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-              var data = JSON.parse(this.responseText);
-              while(specializare.length)
-              specializare.remove(0);
-              var option = document.createElement('option');
-              for(var i = 0; i < data.length; i++) {
-                option = document.createElement('option');
-                option.innerHTML = data[i].specializare;
-                option.setAttribute('id',i);
-                specializare.appendChild(option);
-              }
-            }  
-          }
-          request.open("POST", "/api/api.php", true);
-          request.setRequestHeader("Content-type", "application/application/json");
-          request.send(JSON.stringify({api:"specializari"}));
         }
       }
       function StageOne() {
@@ -1110,7 +1419,7 @@
           request.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
               console.log(this.responseText);
-              
+              onChange();
             }  
           }
           request.open("POST", "/api/api.php", true);
